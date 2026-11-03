@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..600,0..1,0&display=block" rel="stylesheet">
+<style>
+:root{--bg:#F8F9FC;--surface:#FFFFFF;--surface2:#F0F1F7;--ink:#14152A;--muted:#5C6078;--line:#E3E5EE;--soft:rgba(99,91,255,.10);--pink:#4F46E5;}
+[data-theme="dark"]{--bg:#11121A;--surface:#1A1B26;--surface2:#242636;--ink:#F2F3F8;--muted:#A0A4BA;--line:#2D2F41;--soft:rgba(99,91,255,.20);--pink:#9C97FF;}
+body{margin:0;}
+input,button{font-family:inherit;}
+a{color:#635BFF;}a:hover{color:#8B5CF6;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#E9EAF1;display:flex;flex-wrap:wrap;gap:48px;justify-content:center;align-items:flex-start;padding:20px 24px;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;color:#14152A">
+  <aside style="flex:1 1 220px;max-width:260px;display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:18px;font-weight:800">Meta Pix</span>
+      <span style="font-size:13px;color:#5C6078">Simplified prototype · v2</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:16px;padding:8px;border:1px solid #E3E5EE">
+      <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="8">
+        <button onClick="{{ j.onClick }}" style="padding:10px 12px;border:none;border-radius:10px;background:{{ j.bg }};cursor:pointer;text-align:left;color:#14152A;font-size:14px;font-weight:{{ j.weight }}" style-hover="background:#F0F1F7">{{ j.label }}</button>
+      </sc-for>
+    </div>
+  </aside>
+
+  <div style="width:{{ phoneW }};height:{{ phoneH }};flex-shrink:0"><div style="width:412px;height:892px;transform:scale({{ scale }});transform-origin:top left">
+  <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ isDark }}" hint-size="412px,892px">
+    <div data-theme="{{ theme }}" style="height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;position:relative;overflow:hidden">
+
+      <!-- HOME -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 20px">
+            <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">M</div>
+            <span style="font-size:17px;font-weight:800">Meta Pix</span>
+          </div>
+          <div style="flex:1;overflow:auto;padding:16px 20px 24px;display:grid;align-content:start;grid-auto-rows:max-content;grid-template-columns:minmax(0,1fr);gap:28px">
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px">
+              <h1 style="margin:0;font-size:20px;line-height:1.25;font-weight:800;letter-spacing:-.3px;text-wrap:balance">Your Images. Perfectly Optimized.</h1>
+              <p style="margin:0;font-size:13px;line-height:1.5;color:var(--muted);text-wrap:pretty">Prepare, optimize, and export images for every social platform.</p>
+              <button onClick="{{ goImport }}" style="margin-top:10px;align-self:stretch;height:56px;border:none;border-radius:16px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 8px 20px rgba(99,91,255,.3)"><span style="font-family:'Material Symbols Rounded';font-size:22px">add_photo_alternate</span>Import Image</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:14px;font-weight:800;color:var(--muted)">Quick start</span>
+              <div style="display:flex;flex-direction:column;border-radius:18px;background:var(--surface);border:1px solid var(--line);overflow:hidden">
+                <sc-for list="{{ quick }}" as="q" hint-placeholder-count="3">
+                  <button onClick="{{ q.onClick }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-align:left">
+                    <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--pink)">{{ q.icon }}</span>
+                    <span style="flex:1;font-size:15px;font-weight:700">{{ q.title }}</span>
+                    <span style="font-family:'Material Symbols Rounded';font-size:20px;color:var(--muted)">chevron_right</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:14px;font-weight:800;color:var(--muted)">Recent</span>
+              <div style="display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px;scrollbar-width:none">
+                <sc-for list="{{ recents }}" as="r" hint-placeholder-count="4">
+                  <button onClick="{{ r.onClick }}" style="flex-shrink:0;width:104px;height:104px;border:none;border-radius:16px;background:{{ r.g }};cursor:pointer;padding:0"></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- IMPORT -->
+      <sc-if value="{{ isImport }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px">
+            <button onClick="{{ goHome }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px">arrow_back</button>
+            <span style="font-size:17px;font-weight:800">Choose an image</span>
+          </div>
+          <div style="flex:1;overflow:auto;padding:8px 16px 24px;display:grid;align-content:start;grid-auto-rows:max-content;grid-template-columns:minmax(0,1fr);gap:16px">
+            <button onClick="{{ pickImage }}" style="height:120px;border:2px dashed var(--line);border-radius:20px;background:var(--surface);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer">
+              <span style="font-family:'Material Symbols Rounded';font-size:30px;color:var(--pink)">upload</span>
+              <span style="font-size:15px;font-weight:800">Browse files</span>
+              <span style="font-size:12px;color:var(--muted)">Original is never modified</span>
+            </button>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+              <sc-for list="{{ deviceImages }}" as="d" hint-placeholder-count="9">
+                <button onClick="{{ pickImage }}" style="aspect-ratio:1;border:none;border-radius:12px;background:{{ d.g }};cursor:pointer;padding:0"></button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- EDITOR -->
+      <sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:56px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px">
+            <button onClick="{{ goHome }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px">arrow_back</button>
+            <span style="flex:1;font-size:16px;font-weight:800">Edit image</span>
+            <button onClick="{{ goImport }}" style="height:40px;padding:0 12px;border:none;border-radius:20px;background:transparent;color:var(--pink);font-size:14px;font-weight:700;cursor:pointer">Replace</button>
+          </div>
+          <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative;scrollbar-width:none">
+            <div style="padding:4px 16px 0">
+              <div style="position:relative;aspect-ratio:3/2;border-radius:18px;overflow:hidden;background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)">
+                <button onClick="{{ openFullscreen }}" style="position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:20px;border:none;background:rgba(10,12,30,.5);color:#fff;cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">open_in_full</button>
+              </div>
+              <span style="display:block;margin-top:10px;font-size:13px;color:var(--muted);text-align:center">aurora_ai_0412.jpg · 1200 × 800 · 1.2 MB</span>
+            </div>
+            <div data-anchor="tabs" style="height:10px"></div>
+            <div style="position:sticky;top:0;z-index:3;background:var(--bg);padding:6px 16px 12px">
+              <div style="display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--surface2)">
+                <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+                  <button onClick="{{ t.onClick }}" style="flex:1;height:42px;border:none;border-radius:11px;background:{{ t.bg }};color:{{ t.color }};box-shadow:{{ t.shadow }};font-size:14px;font-weight:800;cursor:pointer">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <sc-if value="{{ isMeta }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:4px 16px 28px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;gap:8px">
+                  <button onClick="{{ generate }}" style="flex:1;height:46px;border:none;border-radius:14px;background:var(--soft);color:var(--pink);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">auto_awesome</span>{{ generateLabel }}</button>
+                  <button onClick="{{ copyAll }}" title="Copy all" style="width:46px;height:46px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">content_copy</button>
+                </div>
+                <sc-for list="{{ fields }}" as="f" hint-placeholder-count="3">
+                  <label style="display:flex;flex-direction:column;gap:6px">
+                    <span style="font-size:13px;font-weight:700;color:var(--muted)">{{ f.label }}</span>
+                    <div style="position:relative">
+                      <input value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" style="height:48px;width:100%;box-sizing:border-box;padding:0 44px 0 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;outline:none" style-focus="border-color:#635BFF">
+                      <sc-if value="{{ f.hasValue }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ f.onClear }}" style="position:absolute;right:4px;top:4px;width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:18px">close</button>
+                      </sc-if>
+                    </div>
+                  </label>
+                </sc-for>
+                <button onClick="{{ toggleMore }}" style="height:44px;border:none;background:none;color:var(--pink);font-size:14px;font-weight:700;display:flex;align-items:center;gap:4px;cursor:pointer;padding:0;align-self:flex-start">{{ moreLabel }}<span style="font-family:'Material Symbols Rounded';font-size:20px">{{ moreIcon }}</span></button>
+
+                <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+                    <button onClick="{{ toggleCr }}" style="flex:1;display:flex;flex-direction:column;gap:2px;border:none;background:none;padding:0;color:var(--ink);cursor:pointer;text-align:left">
+                      <span style="font-size:14px;font-weight:800">Copyright</span>
+                      <span style="font-size:13px;color:var(--muted)">{{ crSub }}</span>
+                    </button>
+                    <button onClick="{{ crSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ crSwitch.bg }};display:flex;justify-content:{{ crSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                  </div>
+                  <sc-if value="{{ crOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ crFields }}" as="c" hint-placeholder-count="3">
+                        <label style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">{{ c.label }}</span>
+                          <input value="{{ c.value }}" onChange="{{ c.onChange }}" placeholder="Optional" style="height:44px;width:100%;box-sizing:border-box;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:15px;outline:none" style-focus="border-color:#635BFF"></label>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:13px;font-weight:700;color:var(--muted)">Existing image metadata</span>
+                  <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                    <sc-for list="{{ modeSeg }}" as="r" hint-placeholder-count="3">
+                      <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                    </sc-for>
+                  </div>
+                  <span style="font-size:12px;color:var(--muted)">{{ modeNote }}</span>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isSize }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:4px 16px 28px;display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ platforms }}" as="p" hint-placeholder-count="7">
+                    <button onClick="{{ p.onClick }}" style="height:40px;padding:0 14px;border-radius:20px;border:{{ p.border }};background:{{ p.bg }};color:{{ p.color }};font-size:13px;font-weight:700;cursor:pointer">{{ p.name }}</button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ isPreset }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--surface);border:1px solid var(--line);overflow:hidden">
+                    <sc-for list="{{ orients }}" as="o" hint-placeholder-count="3">
+                      <button onClick="{{ o.onClick }}" style="display:flex;align-items:center;gap:12px;padding:0 14px;height:52px;border:none;border-bottom:1px solid var(--line);background:{{ o.bg }};color:var(--ink);cursor:pointer;text-align:left">
+                        <span style="width:20px;height:20px;border-radius:10px;border:2px solid {{ o.ring }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:5px;background:{{ o.dot }}"></span></span>
+                        <span style="flex:1;font-size:15px;font-weight:700">{{ o.label }}</span>
+                        <span style="font-size:13px;color:var(--muted)">{{ o.dims }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ isCustom }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;align-items:flex-end;gap:8px">
+                      <label style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">Width</span>
+                        <input type="number" value="{{ customW }}" onChange="{{ onCustomW }}" style="height:48px;width:100%;box-sizing:border-box;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:16px;font-weight:700;outline:none"></label>
+                      <button onClick="{{ toggleLock }}" title="Lock ratio" style="width:48px;height:48px;flex-shrink:0;border-radius:12px;border:1px solid var(--line);background:{{ lockBg }};color:{{ lockColor }};cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">{{ lockIcon }}</button>
+                      <label style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">Height</span>
+                        <input type="number" value="{{ customH }}" onChange="{{ onCustomH }}" style="height:48px;width:100%;box-sizing:border-box;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:16px;font-weight:700;outline:none"></label>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                      <sc-for list="{{ customPresets }}" as="c" hint-placeholder-count="2">
+                        <span style="height:36px;display:flex;align-items:center;border-radius:18px;border:1px solid var(--line);background:var(--surface);overflow:hidden">
+                          <button onClick="{{ c.onApply }}" style="height:100%;padding:0 4px 0 12px;border:none;background:none;color:var(--ink);font-size:12px;font-weight:700;cursor:pointer">{{ c.label }}</button>
+                          <button onClick="{{ c.onDelete }}" style="width:30px;height:100%;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:16px">close</button>
+                        </span>
+                      </sc-for>
+                      <button onClick="{{ savePreset }}" style="height:36px;padding:0 12px;border:none;border-radius:18px;background:var(--soft);color:var(--pink);font-size:12px;font-weight:800;cursor:pointer">+ Save preset</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ isResized }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="height:180px;border-radius:16px;background:var(--surface2);display:flex;align-items:center;justify-content:center">
+                      <div style="position:relative;width:{{ pv.fw }};height:{{ pv.fh }};border-radius:6px;overflow:hidden;background:{{ pv.bg }}">
+                        <div style="position:absolute;left:{{ pv.il }};top:{{ pv.it }};width:{{ pv.iw }};height:{{ pv.ih }};background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                      <sc-for list="{{ resizeSeg }}" as="r" hint-placeholder-count="2">
+                        <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ isOriginal }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:13px;color:var(--muted);line-height:1.5">Keeping the original 1200 × 800 size. Pick a platform to resize.</span>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isFormat }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:4px 16px 28px;display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                  <sc-for list="{{ fmtSeg }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.onClick }}" style="flex:1;height:44px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:14px;font-weight:800;cursor:pointer">{{ r.label }}</button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ showQuality }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <div style="display:flex;justify-content:space-between"><span style="font-size:14px;font-weight:700">Quality</span><span style="font-size:14px;font-weight:800;color:var(--pink)">{{ quality }}%</span></div>
+                    <input type="range" min="10" max="100" value="{{ quality }}" onChange="{{ onQuality }}" style="width:100%;accent-color:#635BFF;height:28px">
+                  </div>
+                </sc-if>
+                <sc-if value="{{ isPng }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:13px;color:var(--muted)">PNG is lossless and keeps transparency.</span>
+                </sc-if>
+                <label style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:13px;font-weight:700;color:var(--muted)">File name</span>
+                  <div style="display:flex;align-items:center;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);overflow:hidden">
+                    <input value="{{ fileNameVal }}" onChange="{{ onFileName }}" placeholder="aurora_ai_0412" style="flex:1;min-width:0;height:100%;padding:0 4px 0 14px;border:none;background:transparent;color:var(--ink);font-size:15px;outline:none">
+                    <span style="padding:0 14px;font-size:14px;color:var(--muted)">{{ ext }}</span>
+                  </div>
+                </label>
+                <button onClick="{{ openLocation }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left">
+                  <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--pink)">folder</span>
+                  <span style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:12px;color:var(--muted)">Save to</span><span style="font-size:14px;font-weight:700">{{ locPath }}</span></span>
+                  <span style="font-size:13px;font-weight:700;color:var(--pink)">Change</span>
+                </button>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="flex-shrink:0;padding:10px 16px 12px;background:var(--surface);border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:12px;color:var(--muted);text-align:center">{{ barInfo }}</span>
+            <button onClick="{{ doExport }}" style="height:54px;border:none;border-radius:16px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">{{ exportLabel }}<span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_forward</span></button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SUCCESS -->
+      <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;overflow:auto;padding:40px 20px 24px;display:grid;align-content:start;grid-auto-rows:max-content;grid-template-columns:minmax(0,1fr);justify-items:center;gap:16px">
+          <span style="width:60px;height:60px;border-radius:30px;background:rgba(18,184,134,.14);color:#0E9F6E;display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:32px">check</span>
+          <span style="font-size:22px;font-weight:800">Image exported</span>
+          <div style="width:280px;height:200px;display:flex;align-items:center;justify-content:center">
+            <div style="position:relative;width:{{ spv.fw }};height:{{ spv.fh }};border-radius:12px;overflow:hidden;background:{{ spv.bg }}">
+              <div style="position:absolute;left:{{ spv.il }};top:{{ spv.it }};width:{{ spv.iw }};height:{{ spv.ih }};background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
+            <span style="font-size:15px;font-weight:700;word-break:break-all">{{ last.file }}</span>
+            <span style="font-size:13px;color:var(--muted)">{{ last.meta }}</span>
+            <span style="font-size:13px;color:var(--muted)">Saved to {{ last.loc }}</span>
+          </div>
+          <div style="width:100%;display:flex;gap:8px;margin-top:8px">
+            <button onClick="{{ share }}" style="flex:1;height:52px;border:none;border-radius:14px;background:#635BFF;color:#fff;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:20px">share</span>Share</button>
+            <button onClick="{{ openImg }}" style="flex:1;height:52px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer">Open</button>
+          </div>
+          <div style="display:flex;gap:16px">
+            <button onClick="{{ goEditor }}" style="height:44px;border:none;background:none;color:var(--pink);font-size:14px;font-weight:700;cursor:pointer">Back to editor</button>
+            <button onClick="{{ goHistory }}" style="height:44px;border:none;background:none;color:var(--pink);font-size:14px;font-weight:700;cursor:pointer">View history</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- HISTORY -->
+      <sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;padding:0 20px"><span style="font-size:22px;font-weight:800">History</span></div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-auto-rows:max-content;grid-template-columns:minmax(0,1fr);gap:8px">
+            <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+                <span style="width:52px;height:52px;flex-shrink:0;border-radius:10px;background:{{ h.g }}"></span>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.file }}</span>
+                  <span style="font-size:12px;color:var(--muted)">{{ h.meta }}</span>
+                </div>
+                <button onClick="{{ h.onShare }}" style="width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">share</button>
+                <button onClick="{{ h.onDelete }}" style="width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">delete</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SETTINGS -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;padding:0 20px"><span style="font-size:22px;font-weight:800">Settings</span></div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-auto-rows:max-content;grid-template-columns:minmax(0,1fr);gap:18px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:13px;font-weight:700;color:var(--muted)">Theme</span>
+              <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                <sc-for list="{{ themeSeg }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:13px;font-weight:700;color:var(--muted)">Default creator &amp; copyright name</span>
+              <input value="{{ defName }}" onChange="{{ onDefName }}" style="height:48px;width:100%;box-sizing:border-box;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;outline:none" style-focus="border-color:#635BFF">
+            </label>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:13px;font-weight:700;color:var(--muted)">Default format</span>
+              <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                <sc-for list="{{ defFmtSeg }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--line)">
+                <span style="flex:1;font-size:14px;font-weight:700">Remember last save location</span>
+                <button onClick="{{ rememberSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ rememberSwitch.bg }};display:flex;justify-content:{{ rememberSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+              </div>
+              <button onClick="{{ clearHistory }}" style="display:flex;align-items:center;padding:14px;border:none;background:none;color:#D93D3D;font-size:14px;font-weight:700;cursor:pointer;text-align:left">Clear export history</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+        <div style="flex-shrink:0;height:68px;display:flex;background:var(--surface);border-top:1px solid var(--line)">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+            <button onClick="{{ n.onClick }}" style="flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{ n.color }}">
+              <span style="font-family:'Material Symbols Rounded';font-size:24px;font-variation-settings:{{ n.fill }}">{{ n.icon }}</span>
+              <span style="font-size:11px;font-weight:700">{{ n.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sheetLocation }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end">
+          <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(8,9,20,.45)"></div>
+          <div style="position:relative;background:var(--surface);border-radius:24px 24px 0 0;padding:10px 16px 20px;display:flex;flex-direction:column;gap:6px">
+            <span style="align-self:center;width:36px;height:4px;border-radius:2px;background:var(--line);margin-bottom:8px"></span>
+            <sc-for list="{{ locations }}" as="l" hint-placeholder-count="4">
+              <button onClick="{{ l.onClick }}" style="display:flex;align-items:center;gap:12px;height:52px;padding:0 12px;border:none;border-radius:12px;background:{{ l.bg }};color:var(--ink);cursor:pointer;text-align:left">
+                <span style="flex:1;font-size:15px;font-weight:700">{{ l.path }}</span>
+                <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#635BFF">{{ l.check }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ fullscreen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeFullscreen }}" style="position:absolute;inset:0;z-index:30;background:#05060C;display:flex;align-items:center;cursor:pointer">
+          <div style="aspect-ratio:3/2;width:100%;background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;right:0;bottom:120px;z-index:40;display:flex;justify-content:center;pointer-events:none">
+          <span style="padding:10px 16px;border-radius:12px;background:#14152A;color:#fff;font-size:13px;font-weight:700">{{ toast }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </x-import>
+  </div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showEstimate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const IMG = 'radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)';
+const G = [IMG, 'linear-gradient(160deg,#FFC59E,#FF7E9D 50%,#7446D6)', 'linear-gradient(160deg,#0F3D3E,#2E8B7A 55%,#C9E7A4)', 'linear-gradient(160deg,#F4E6D4,#D6A274 50%,#6E4426)', 'linear-gradient(160deg,#101828,#2B3A67 50%,#22D3EE)', 'linear-gradient(160deg,#FDE2E4,#C3B1E1 50%,#635BFF)', 'linear-gradient(160deg,#1E1B16,#7A5C3A 60%,#F2C57C)', 'linear-gradient(160deg,#E6F4F1,#8FD3C7 50%,#2A6F97)', 'linear-gradient(160deg,#2A0F2E,#8B2F6B 50%,#FF9F7A)'];
+const PRESETS = {
+  facebook: { name: 'Facebook', sizes: { h: [1200, 630], s: [1080, 1080], v: [1080, 1350] } },
+  instagram: { name: 'Instagram', sizes: { h: [1080, 566], s: [1080, 1080], v: [1080, 1350] } },
+  linkedin: { name: 'LinkedIn', sizes: { h: [1200, 627], s: [1080, 1080], v: [1080, 1350] } },
+  x: { name: 'X', sizes: { h: [1600, 900], s: [1080, 1080], v: [1080, 1350] } },
+  pinterest: { name: 'Pinterest', sizes: { h: [1500, 1000], s: [1000, 1000], v: [1000, 1500], long: [1000, 2100] } },
+};
+const ORIENT = { h: 'Horizontal', s: 'Square', v: 'Vertical', long: 'Long vertical' };
+const CORE = [['fileName', 'File name', 'e.g. aurora-mountain-lake'], ['title', 'Title', 'Image title'], ['alt', 'Alt text', 'Describe the image']];
+const EXTRA = [['description', 'Description', 'Short description'], ['keyword', 'Focus keyword', 'Main keyword'], ['related', 'Related keywords', 'Comma-separated'], ['caption', 'Caption', 'Optional caption'], ['tags', 'Tags', 'Comma-separated']];
+const SAMPLE = { fileName: 'aurora-over-mountain-lake', title: 'Aurora Borealis Over a Calm Mountain Lake', alt: 'Green and violet aurora above snowy mountains reflected in a still lake', description: 'Vivid northern lights over a starry sky, mirrored on a remote mountain lake.', keyword: 'aurora borealis landscape', related: 'northern lights, night sky, mountain lake', caption: "Nature's light show, reflected in stillness.", tags: 'aurora, landscape, night, lake, AI art' };
+const FMT = { jpeg: 'JPEG', png: 'PNG', webp: 'WebP' };
+const EXT = { jpeg: '.jpg', png: '.png', webp: '.webp' };
+const LOCS = ['Pictures / MetaPix', 'Downloads', 'Internal / MetaPix', 'Choose folder…'];
+const empty = () => [...CORE, ...EXTRA].reduce((a, [k]) => (a[k] = '', a), {});
+const slug = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+class Component extends DCLogic {
+  scrollRef = React.createRef();
+  state = {
+    screen: 'home', tab: 'meta', theme: null, jumpIdx: 0, pending: null,
+    fields: empty(), generating: false, more: false,
+    crOn: true, crOpen: false, cr: { creator: 'Mostafij Emon', owner: 'Mostafij Emon', notice: '© Mostafij Emon' }, defName: 'Mostafij Emon', metaMode: 'keep',
+    platform: 'original', orient: 'h', customW: 1200, customH: 800, lock: false, ratio: 1.5,
+    customPresets: [{ id: 1, w: 1600, h: 840 }, { id: 2, w: 1080, h: 1920 }], resize: 'fill',
+    format: 'jpeg', quality: 90, defFormat: 'jpeg', location: 0, remember: true,
+    sheet: null, fullscreen: false, toast: null, exporting: false, lastExport: null,
+    history: [
+      { id: 11, file: 'sunset-cafe-interior.webp', meta: 'WebP · 1080 × 1350 · 286 KB', g: G[1] },
+      { id: 12, file: 'forest-trail-dawn.jpg', meta: 'JPEG · 1200 × 630 · 214 KB', g: G[2] },
+      { id: 13, file: 'ceramic-vase-still-life.png', meta: 'PNG · 1080 × 1080 · 1.4 MB', g: G[3] },
+    ],
+  };
+  componentDidMount() { this.onResize = () => this.setState({ vh: window.innerHeight }); window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { clearTimeout(this.tt); window.removeEventListener('resize', this.onResize); }
+  toast(m) { this.setState({ toast: m }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1500); }
+  out() {
+    const s = this.state;
+    if (s.platform === 'original') return [1200, 800];
+    if (s.platform === 'custom') return [Math.max(1, +s.customW || 1), Math.max(1, +s.customH || 1)];
+    const z = PRESETS[s.platform].sizes; return z[s.orient] || z.h;
+  }
+  est(w, h) {
+    const s = this.state, q = s.quality / 100;
+    const bpp = s.format === 'png' ? 9.5 : s.format === 'webp' ? 0.45 + 2.6 * q * q * q : 0.6 + 3.4 * q * q * q;
+    const b = w * h * bpp / 8; return b >= 1e6 ? (b / 1e6).toFixed(1) + ' MB' : Math.round(b / 1000) + ' KB';
+  }
+  metaStatus() {
+    const s = this.state;
+    if (s.metaMode === 'remove') return 'Metadata removed';
+    const any = Object.values(s.fields).some(v => v) || (s.crOn && Object.values(s.cr).some(v => v));
+    return any ? 'Metadata included' : 'No metadata';
+  }
+  record() {
+    const s = this.state, [w, h] = this.out();
+    return { file: (slug(s.fields.fileName) || 'aurora_ai_0412') + EXT[s.format], meta: `${FMT[s.format]} · ${w} × ${h} · ${this.est(w, h)}`, loc: LOCS[s.location], w, h, resize: s.resize, g: G[0], id: Date.now() };
+  }
+  doExport = () => {
+    if (this.state.exporting) return;
+    this.setState({ exporting: true });
+    setTimeout(() => { const r = this.record(); this.setState(s => ({ exporting: false, screen: 'success', lastExport: r, history: [r, ...s.history] })); }, 800);
+  };
+  setTab(t) {
+    this.setState({ tab: t });
+    const c = this.scrollRef.current; if (c) { const m = c.querySelector('[data-anchor="tabs"]'); if (m && c.scrollTop > m.offsetTop) c.scrollTop = m.offsetTop; }
+  }
+  jump(i) {
+    const s = this.state, base = { jumpIdx: i, sheet: null, fullscreen: false };
+    const P = [{ screen: 'home' }, { screen: 'import' }, { screen: 'editor', tab: 'meta' }, { screen: 'editor', tab: 'size', platform: s.platform === 'original' ? 'instagram' : s.platform }, { screen: 'editor', tab: 'format' }, { screen: 'success', lastExport: s.lastExport || this.record() }, { screen: 'history' }, { screen: 'settings' }];
+    this.setState({ ...base, ...P[i] }, () => { if (P[i].tab) setTimeout(() => { const c = this.scrollRef.current; const m = c && c.querySelector('[data-anchor="tabs"]'); if (m) c.scrollTop = m.offsetTop; }, 60); });
+  }
+  renderVals() {
+    const s = this.state;
+    const theme = s.theme || (this.props.dark ? 'dark' : 'light');
+    const [w, h] = this.out();
+    const set = (p) => () => this.setState(p);
+    const sw = (on, fn) => ({ bg: on ? '#635BFF' : 'var(--line)', justify: on ? 'flex-end' : 'flex-start', onToggle: fn });
+    const seg = (opts, cur, fn) => opts.map(([v, l]) => ({ label: l, onClick: () => fn(v), bg: cur === v ? 'var(--surface)' : 'transparent', color: cur === v ? 'var(--ink)' : 'var(--muted)', shadow: cur === v ? '0 1px 3px rgba(20,21,42,.14)' : 'none' }));
+    const chip = (on) => ({ border: on ? '1px solid #635BFF' : '1px solid var(--line)', bg: on ? '#635BFF' : 'var(--surface)', color: on ? '#fff' : 'var(--ink)' });
+    const preview = (MW, MH, A, mode) => {
+      let fw, fh; if (A >= MW / MH) { fw = MW; fh = MW / A; } else { fh = MH; fw = MH * A; }
+      let iw, ih; const IA = 1.5;
+      if ((mode === 'fill') === (A > IA)) { iw = fw; ih = fw / IA; } else { ih = fh; iw = fh * IA; }
+      const px = n => Math.round(n) + 'px';
+      return { fw: px(fw), fh: px(fh), iw: px(iw), ih: px(ih), il: px((fw - iw) / 2), it: px((fh - ih) / 2), bg: mode === 'fit' ? '#FFFFFF' : '#000' };
+    };
+    const field = ([k, l, ph]) => ({ label: l, value: s.fields[k], hasValue: !!s.fields[k], ph: s.generating ? 'Generating…' : ph,
+      onChange: (e) => { const v = e.target.value; this.setState(st => ({ fields: { ...st.fields, [k]: v } })); },
+      onClear: (e) => { e.preventDefault(); this.setState(st => ({ fields: { ...st.fields, [k]: '' } })); } });
+    const last = s.lastExport || this.record();
+    const showEst = this.props.showEstimate !== false;
+    const fromImport = (tab, extra) => () => this.setState({ screen: 'import', pending: { tab, extra } });
+    const pd = s.pending || {};
+    return {
+      theme, isDark: theme === 'dark',
+      ...(() => { const sc = Math.min(1, Math.max(0.5, ((s.vh || 932) - 40) / 892)); return { scale: sc, phoneW: Math.round(412 * sc) + 'px', phoneH: Math.round(892 * sc) + 'px' }; })(),
+      jumps: ['Home', 'Import', 'Editor · Metadata', 'Editor · Size', 'Editor · Format', 'Export success', 'History', 'Settings'].map((l, i) => ({ label: l, onClick: () => this.jump(i), bg: s.jumpIdx === i ? '#EEEDFF' : 'transparent', weight: s.jumpIdx === i ? '800' : '600' })),
+      isHome: s.screen === 'home', isImport: s.screen === 'import', isEditor: s.screen === 'editor', isSuccess: s.screen === 'success', isHistory: s.screen === 'history', isSettings: s.screen === 'settings',
+      showNav: ['home', 'history', 'settings'].includes(s.screen),
+      navItems: [['home', 'Home', 'home'], ['history', 'History', 'history'], ['settings', 'Settings', 'settings']].map(([k, l, ic]) => ({ label: l, icon: ic, onClick: set({ screen: k }), color: s.screen === k ? 'var(--pink)' : 'var(--muted)', fill: s.screen === k ? "'FILL' 1" : "'FILL' 0" })),
+      goHome: set({ screen: 'home' }), goImport: set({ screen: 'import', pending: null }), goEditor: set({ screen: 'editor' }), goHistory: set({ screen: 'history' }),
+      pickImage: () => this.setState({ screen: 'editor', tab: pd.tab || 'meta', ...(pd.extra || {}) }),
+      quick: [
+        { icon: 'sell', title: 'Add SEO metadata', onClick: fromImport('meta') },
+        { icon: 'aspect_ratio', title: 'Resize for social media', onClick: fromImport('size', { platform: 'instagram' }) },
+        { icon: 'swap_horiz', title: 'Change format', onClick: fromImport('format', { format: 'webp' }) },
+      ],
+      recents: G.slice(0, 5).map(g => ({ g, onClick: set({ screen: 'editor', tab: 'meta' }) })),
+      deviceImages: G.map(g => ({ g })),
+      scrollRef: this.scrollRef,
+      openFullscreen: set({ fullscreen: true }), closeFullscreen: set({ fullscreen: false }), fullscreen: s.fullscreen,
+      tabs: [['meta', 'Metadata'], ['size', 'Size'], ['format', 'Format']].map(([k, l]) => ({ label: l, onClick: () => this.setTab(k), bg: s.tab === k ? 'var(--surface)' : 'transparent', color: s.tab === k ? 'var(--ink)' : 'var(--muted)', shadow: s.tab === k ? '0 1px 4px rgba(20,21,42,.14)' : 'none' })),
+      isMeta: s.tab === 'meta', isSize: s.tab === 'size', isFormat: s.tab === 'format',
+      generateLabel: s.generating ? 'Generating…' : 'Fill with AI',
+      generate: () => { if (s.generating) return; this.setState({ generating: true, fields: empty() }); setTimeout(() => this.setState({ generating: false, fields: { ...SAMPLE } }), 1000); },
+      copyAll: () => { try { navigator.clipboard.writeText(Object.values(s.fields).filter(Boolean).join('\n')); } catch (e) {} this.toast('Copied'); },
+      fields: [...CORE, ...(s.more ? EXTRA : [])].map(field),
+      toggleMore: set({ more: !s.more }), moreLabel: s.more ? 'Fewer fields' : 'More fields (5)', moreIcon: s.more ? 'expand_less' : 'expand_more',
+      crSub: s.crOn ? s.cr.creator || 'No name' : 'Not added', crOpen: s.crOpen && s.crOn, toggleCr: set({ crOpen: !s.crOpen }),
+      crSwitch: sw(s.crOn, set({ crOn: !s.crOn })),
+      crFields: [['creator', 'Creator'], ['owner', 'Copyright owner'], ['notice', 'Copyright notice']].map(([k, l]) => ({ label: l, value: s.cr[k], onChange: (e) => { const v = e.target.value; this.setState(st => ({ cr: { ...st.cr, [k]: v } })); } })),
+      modeSeg: seg([['keep', 'Keep'], ['update', 'Update'], ['remove', 'Remove all']], s.metaMode, v => this.setState({ metaMode: v })),
+      modeNote: s.metaMode === 'remove' ? 'All EXIF / IPTC / XMP data will be stripped.' : s.metaMode === 'update' ? 'Only fields you edit are overwritten.' : 'Existing data is kept; new fields are added.',
+      platforms: [['original', 'Original'], ...Object.entries(PRESETS).map(([k, p]) => [k, p.name]), ['custom', 'Custom']].map(([k, n]) => ({ name: n, ...chip(s.platform === k), onClick: () => this.setState({ platform: k, orient: PRESETS[k] && !PRESETS[k].sizes[s.orient] ? 'h' : s.orient }) })),
+      isOriginal: s.platform === 'original', isPreset: !!PRESETS[s.platform], isCustom: s.platform === 'custom', isResized: s.platform !== 'original',
+      orients: PRESETS[s.platform] ? Object.entries(PRESETS[s.platform].sizes).map(([k, [cw, ch]]) => ({ label: ORIENT[k], dims: `${cw} × ${ch}`, onClick: set({ orient: k }), bg: s.orient === k ? 'var(--soft)' : 'transparent', ring: s.orient === k ? '#635BFF' : 'var(--line)', dot: s.orient === k ? '#635BFF' : 'transparent' })) : [],
+      customW: s.customW, customH: s.customH,
+      onCustomW: (e) => { const v = e.target.value; this.setState(st => ({ customW: v, customH: st.lock && +v ? Math.round(+v / st.ratio) : st.customH })); },
+      onCustomH: (e) => { const v = e.target.value; this.setState(st => ({ customH: v, customW: st.lock && +v ? Math.round(+v * st.ratio) : st.customW })); },
+      toggleLock: () => this.setState(st => ({ lock: !st.lock, ratio: (+st.customW || 1) / (+st.customH || 1) })),
+      lockIcon: s.lock ? 'lock' : 'lock_open', lockBg: s.lock ? 'var(--soft)' : 'var(--surface)', lockColor: s.lock ? 'var(--pink)' : 'var(--muted)',
+      customPresets: s.customPresets.map(p => ({ label: `${p.w} × ${p.h}`, onApply: set({ customW: p.w, customH: p.h }), onDelete: () => this.setState(st => ({ customPresets: st.customPresets.filter(x => x.id !== p.id) })) })),
+      savePreset: () => { if (!+s.customW || !+s.customH) return; this.setState(st => ({ customPresets: [...st.customPresets, { id: Date.now(), w: +st.customW, h: +st.customH }] })); this.toast('Preset saved'); },
+      pv: preview(240, 150, w / h, s.resize),
+      resizeSeg: seg([['fill', 'Crop to fill'], ['fit', 'Fit (add border)']], s.resize, v => this.setState({ resize: v })),
+      fmtSeg: seg([['jpeg', 'JPEG'], ['png', 'PNG'], ['webp', 'WebP']], s.format, v => this.setState({ format: v })),
+      showQuality: s.format !== 'png', isPng: s.format === 'png',
+      quality: s.quality, onQuality: (e) => this.setState({ quality: +e.target.value }),
+      fileNameVal: s.fields.fileName, onFileName: (e) => { const v = e.target.value; this.setState(st => ({ fields: { ...st.fields, fileName: v } })); },
+      ext: EXT[s.format], locPath: LOCS[s.location],
+      openLocation: set({ sheet: 'location' }), closeSheet: set({ sheet: null }), sheetLocation: s.sheet === 'location',
+      locations: LOCS.map((p, i) => ({ path: p, bg: s.location === i ? 'var(--soft)' : 'transparent', check: s.location === i ? 'check' : '', onClick: () => this.setState({ location: i, sheet: null }) })),
+      barInfo: `${FMT[s.format]} · ${w} × ${h}${showEst ? ' · ~' + this.est(w, h) : ''} · ${this.metaStatus()}`,
+      exportLabel: s.exporting ? 'Exporting…' : 'Export Image', doExport: this.doExport,
+      last, spv: preview(280, 200, last.w / last.h, last.resize),
+      share: () => this.toast('Share sheet opened'), openImg: () => this.toast('Opening in Gallery…'),
+      history: s.history.map(x => ({ ...x, onShare: () => this.toast('Share sheet opened'), onDelete: () => this.setState(st => ({ history: st.history.filter(q => q.id !== x.id) })) })),
+      themeSeg: seg([['light', 'Light'], ['dark', 'Dark'], ['system', 'System']], s.theme || 'system', v => this.setState({ theme: v === 'system' ? null : v })),
+      defName: s.defName, onDefName: (e) => { const v = e.target.value; this.setState({ defName: v, cr: { creator: v, owner: v, notice: v ? '© ' + v : '' } }); },
+      defFmtSeg: seg([['jpeg', 'JPEG'], ['png', 'PNG'], ['webp', 'WebP']], s.defFormat, v => this.setState({ defFormat: v, format: v })),
+      rememberSwitch: sw(s.remember, set({ remember: !s.remember })),
+      clearHistory: () => { this.setState({ history: [] }); this.toast('History cleared'); },
+      hasToast: !!s.toast, toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

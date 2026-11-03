@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..600,0..1,0&display=block" rel="stylesheet">
+<style>
+:root{--bg:#F8F9FC;--surface:#FFFFFF;--surface2:#F0F1F7;--ink:#14152A;--muted:#5C6078;--line:#E3E5EE;--field:#FFFFFF;--soft:rgba(99,91,255,.10);--pink:#4F46E5;}
+[data-theme="dark"]{--bg:#11121A;--surface:#1A1B26;--surface2:#242636;--ink:#F2F3F8;--muted:#A0A4BA;--line:#2D2F41;--field:#151620;--soft:rgba(99,91,255,.20);--pink:#9C97FF;}
+body{margin:0;}
+input,textarea,button{font-family:inherit;}
+a{color:#635BFF;}a:hover{color:#8B5CF6;}
+input[type=number]::-webkit-inner-spin-button{opacity:.4;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#E9EAF1;display:flex;flex-wrap:wrap;gap:48px;justify-content:center;align-items:flex-start;padding:40px 24px;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;color:#14152A">
+  <aside style="flex:1 1 260px;max-width:320px;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">M</div>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:18px;font-weight:800">MetaPix Studio</span>
+        <span style="font-size:13px;color:#5C6078">Interactive Android prototype</span>
+      </div>
+    </div>
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#4A4E66;text-wrap:pretty">Every step is optional and every step can export. Tap through the phone, or jump to a screen below.</p>
+    <div style="display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:16px;padding:8px;border:1px solid #E3E5EE">
+      <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="16">
+        <button onClick="{{ j.onClick }}" style="display:flex;align-items:center;gap:12px;padding:9px 10px;border:none;border-radius:10px;background:{{ j.bg }};cursor:pointer;text-align:left;color:#14152A" style-hover="background:#F0F1F7">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ j.numColor }};width:20px">{{ j.n }}</span>
+          <span style="font-size:14px;font-weight:{{ j.weight }}">{{ j.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </aside>
+
+  <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ isDark }}" hint-size="412px,892px">
+    <div data-theme="{{ theme }}" style="height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;position:relative;overflow:hidden">
+
+      <!-- HOME -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 16px">
+            <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px">M</div>
+            <span style="font-size:18px;font-weight:800;letter-spacing:-.2px;flex:1">MetaPix Studio</span>
+            <div style="width:36px;height:36px;border-radius:18px;background:var(--soft);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">ME</div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;gap:24px">
+            <div style="border-radius:24px;padding:22px;background:linear-gradient(145deg,#1A1938,#2B2370 60%,#3E2C94);color:#fff;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:80px;background:radial-gradient(circle,rgba(34,211,238,.35),transparent 70%)"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:#B9B5FF">SEO IMAGE STUDIO</span>
+              <h1 style="margin:0;font-size:27px;line-height:1.15;font-weight:800;letter-spacing:-.5px;text-wrap:balance">Your Images. Perfectly Optimized.</h1>
+              <p style="margin:0;font-size:14px;line-height:1.5;color:#D9D7F5;text-wrap:pretty">Prepare, optimize, and export images for every social platform.</p>
+              <button onClick="{{ goImport }}" style="align-self:flex-start;height:48px;padding:0 20px;border:none;border-radius:14px;background:#fff;color:#3A33C9;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:4px">
+                <span style="font-family:'Material Symbols Rounded';font-size:22px">add_photo_alternate</span>Create New Project
+              </button>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:15px;font-weight:800">Quick actions</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <sc-for list="{{ quickActions }}" as="q" hint-placeholder-count="4">
+                  <button onClick="{{ q.onClick }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left">
+                    <span style="width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--pink);display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:22px">{{ q.icon }}</span>
+                    <span style="display:flex;flex-direction:column;gap:2px">
+                      <span style="font-size:14px;font-weight:700">{{ q.title }}</span>
+                      <span style="font-size:12px;color:var(--muted)">{{ q.sub }}</span>
+                    </span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:15px;font-weight:800">Platform sizes</span>
+              <div style="display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px">
+                <sc-for list="{{ platformShortcuts }}" as="p" hint-placeholder-count="6">
+                  <button onClick="{{ p.onClick }}" style="flex-shrink:0;width:92px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left">
+                    <span style="width:32px;height:32px;border-radius:10px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">{{ p.k }}</span>
+                    <span style="font-size:13px;font-weight:700">{{ p.name }}</span>
+                    <span style="font-size:11px;color:var(--muted);margin-top:-6px">{{ p.count }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:15px;font-weight:800">Recent images</span>
+                <button onClick="{{ goProjects }}" style="border:none;background:none;color:var(--pink);font-size:13px;font-weight:700;cursor:pointer;padding:8px 0">See all</button>
+              </div>
+              <div style="display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px">
+                <sc-for list="{{ recents }}" as="r" hint-placeholder-count="4">
+                  <button onClick="{{ r.onClick }}" style="flex-shrink:0;width:128px;display:flex;flex-direction:column;gap:8px;border:none;background:none;padding:0;cursor:pointer;text-align:left;color:var(--ink)">
+                    <span style="width:128px;height:128px;border-radius:16px;background:{{ r.g }}"></span>
+                    <span style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:128px">{{ r.name }}</span>
+                    <span style="font-size:11px;color:var(--muted);margin-top:-6px">{{ r.dims }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <button onClick="{{ goHistory }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left">
+              <span style="width:40px;height:40px;border-radius:12px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:22px">history</span>
+              <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:14px;font-weight:700">Export history</span>
+                <span style="font-size:12px;color:var(--muted)">{{ historyCount }} exports · last saved to Pictures / MetaPix</span>
+              </span>
+              <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--muted)">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- IMPORT -->
+      <sc-if value="{{ isImport }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px">
+            <button onClick="{{ goHome }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px" style-hover="background:var(--surface2)">arrow_back</button>
+            <span style="font-size:18px;font-weight:800">New project</span>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;gap:22px">
+            <div style="border:2px dashed var(--line);border-radius:24px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;background:var(--surface)">
+              <span style="width:64px;height:64px;border-radius:20px;background:var(--soft);color:var(--pink);display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:32px">add_photo_alternate</span>
+              <span style="font-size:18px;font-weight:800">Import an image</span>
+              <span style="font-size:13px;color:var(--muted);line-height:1.5;max-width:260px">PNG, JPG or WebP up to 50 MB. Your original file is never modified.</span>
+              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;justify-content:center">
+                <button onClick="{{ pickImage }}" style="height:44px;padding:0 16px;border:none;border-radius:12px;background:#635BFF;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">photo_library</span>Gallery</button>
+                <button onClick="{{ pickImage }}" style="height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">folder</span>Files</button>
+                <button onClick="{{ pickImage }}" style="height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">photo_camera</span>Camera</button>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:15px;font-weight:800">Recent on device</span>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ deviceImages }}" as="d" hint-placeholder-count="9">
+                  <button onClick="{{ pickImage }}" style="aspect-ratio:1;border:none;border-radius:12px;background:{{ d.g }};cursor:pointer;padding:0"></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- EDITOR -->
+      <sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px;border-bottom:1px solid var(--line)">
+            <button onClick="{{ goHome }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px" style-hover="background:var(--surface2)">arrow_back</button>
+            <span style="flex:1;font-size:17px;font-weight:800">MetaPix Studio</span>
+            <button onClick="{{ saveProject }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px" style-hover="background:var(--surface2)">bookmark_add</button>
+            <button style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px" style-hover="background:var(--surface2)">more_vert</button>
+          </div>
+          <div ref="{{ scrollRef }}" style="flex:1;overflow:auto;position:relative">
+            <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:12px">
+              <div style="position:relative;aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)">
+                <div style="position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(180deg,transparent,rgba(8,20,32,.65))"></div>
+                <span style="position:absolute;left:14px;bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.85)">aurora_ai_0412.jpg</span>
+                <button onClick="{{ openFullscreen }}" style="position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:20px;border:none;background:rgba(10,12,30,.5);color:#fff;cursor:pointer;font-family:'Material Symbols Rounded';font-size:22px">open_in_full</button>
+                <sc-if value="{{ showOutBadge }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;left:10px;top:10px;height:28px;padding:0 10px;border-radius:14px;background:rgba(10,12,30,.55);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span>{{ outDims }}</span>
+                </sc-if>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                  <span style="height:28px;padding:0 10px;border-radius:8px;background:var(--surface2);font-size:12px;font-weight:700;display:flex;align-items:center">1200 × 800 px</span>
+                  <span style="height:28px;padding:0 10px;border-radius:8px;background:var(--surface2);font-size:12px;font-weight:700;display:flex;align-items:center">JPG</span>
+                  <span style="height:28px;padding:0 10px;border-radius:8px;background:var(--surface2);font-size:12px;font-weight:700;display:flex;align-items:center">1.2 MB</span>
+                </div>
+                <button onClick="{{ goImport }}" style="height:40px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:18px">swap_horiz</span>Replace</button>
+              </div>
+            </div>
+            <div data-anchor="tabs" style="height:12px"></div>
+            <div style="position:sticky;top:0;z-index:3;background:var(--bg);padding:6px 16px 10px">
+              <div style="display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--surface2)">
+                <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+                  <button onClick="{{ t.onClick }}" style="flex:1;height:44px;border:none;border-radius:11px;background:{{ t.bg }};color:{{ t.color }};box-shadow:{{ t.shadow }};font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;position:relative">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.7">{{ t.n }}</span>{{ t.label }}
+                    <sc-if value="{{ t.dirty }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;border-radius:3px;background:#22D3EE"></span></sc-if>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- METADATA TAB -->
+            <sc-if value="{{ isMeta }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:6px 16px 28px;display:flex;flex-direction:column;gap:22px">
+                <div data-anchor="fields" style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:16px;font-weight:800">Image SEO metadata</span>
+                    <span style="font-size:11px;font-weight:700;color:var(--muted);padding:4px 8px;border-radius:6px;background:var(--surface2)">All fields optional</span>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <button onClick="{{ generate }}" style="flex:1;height:46px;border:none;border-radius:14px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">auto_awesome</span>{{ generateLabel }}</button>
+                    <button onClick="{{ copyAll }}" title="Copy all" style="width:46px;height:46px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">content_copy</button>
+                    <button onClick="{{ clearAll }}" title="Clear all" style="width:46px;height:46px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">ink_eraser</button>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                  <sc-for list="{{ fields }}" as="f" hint-placeholder-count="8">
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span style="font-size:13px;font-weight:700;color:var(--muted)">{{ f.label }}</span>
+                        <div style="display:flex">
+                          <button onClick="{{ f.onRegen }}" title="Regenerate" style="width:40px;height:36px;border:none;border-radius:10px;background:transparent;color:var(--pink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px" style-hover="background:var(--soft)">auto_awesome</button>
+                          <button onClick="{{ f.onCopy }}" title="Copy" style="width:40px;height:36px;border:none;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px" style-hover="background:var(--surface2)">content_copy</button>
+                          <button onClick="{{ f.onClear }}" title="Clear" style="width:40px;height:36px;border:none;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px" style-hover="background:var(--surface2)">close</button>
+                        </div>
+                      </div>
+                      <sc-if value="{{ f.single }}" hint-placeholder-val="{{ true }}">
+                        <input value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" style="height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:15px;outline:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF">
+                      </sc-if>
+                      <sc-if value="{{ f.multi }}" hint-placeholder-val="{{ false }}">
+                        <textarea value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" rows="3" style="padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:15px;line-height:1.45;outline:none;resize:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF"></textarea>
+                      </sc-if>
+                      <sc-if value="{{ f.hasCount }}" hint-placeholder-val="{{ false }}">
+                        <span style="align-self:flex-end;font-size:11px;font-family:'JetBrains Mono',monospace;color:{{ f.countColor }}">{{ f.count }}</span>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+
+                <div data-anchor="copyright" style="border-radius:20px;border:1px solid var(--line);background:var(--surface);overflow:hidden">
+                  <div style="display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px">
+                    <button onClick="{{ toggleCrOpen }}" style="flex:1;display:flex;align-items:center;gap:12px;border:none;background:none;padding:0;cursor:pointer;color:var(--ink);text-align:left">
+                      <span style="width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--pink);display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:22px">copyright</span>
+                      <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+                        <span style="font-size:15px;font-weight:800">Copyright &amp; Ownership</span>
+                        <span style="font-size:12px;color:var(--muted)">{{ crSub }}</span>
+                      </span>
+                      <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--muted)">{{ crChevron }}</span>
+                    </button>
+                    <button onClick="{{ crSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ crSwitch.bg }};display:flex;justify-content:{{ crSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                  </div>
+                  <sc-if value="{{ crOpen }}" hint-placeholder-val="{{ true }}">
+                    <div style="padding:2px 16px 16px;display:flex;flex-direction:column;gap:12px;opacity:{{ crOpacity }}">
+                      <sc-for list="{{ crFields }}" as="c" hint-placeholder-count="6">
+                        <div style="display:flex;flex-direction:column;gap:4px">
+                          <span style="font-size:12px;font-weight:700;color:var(--muted)">{{ c.label }}</span>
+                          <div style="position:relative">
+                            <input value="{{ c.value }}" onChange="{{ c.onChange }}" placeholder="{{ c.ph }}" style="height:46px;padding:0 44px 0 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:15px;outline:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF">
+                            <button onClick="{{ c.onClear }}" style="position:absolute;right:3px;top:3px;width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:18px">close</button>
+                          </div>
+                        </div>
+                      </sc-for>
+                      <div style="display:flex;gap:8px;margin-top:2px">
+                        <button onClick="{{ resetCr }}" style="flex:1;height:42px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer">Reset to defaults</button>
+                        <button onClick="{{ saveCrDefault }}" style="flex:1;height:42px;border:none;border-radius:12px;background:var(--soft);color:var(--pink);font-size:13px;font-weight:800;cursor:pointer">Save as default</button>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <div data-anchor="metamode" style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                    <span style="font-size:16px;font-weight:800">Embedded metadata</span>
+                    <span style="height:26px;padding:0 10px;border-radius:13px;background:{{ status.bg }};color:{{ status.color }};font-size:12px;font-weight:800;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:15px">{{ status.icon }}</span>{{ status.label }}</span>
+                  </div>
+                  <sc-for list="{{ metaModes }}" as="m" hint-placeholder-count="3">
+                    <button onClick="{{ m.onClick }}" style="display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:16px;border:{{ m.border }};background:{{ m.bg }};color:var(--ink);cursor:pointer;text-align:left">
+                      <span style="width:20px;height:20px;border-radius:10px;border:2px solid {{ m.ring }};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;box-sizing:border-box"><span style="width:10px;height:10px;border-radius:5px;background:{{ m.dot }}"></span></span>
+                      <span style="display:flex;flex-direction:column;gap:3px">
+                        <span style="font-size:14px;font-weight:800">{{ m.title }}</span>
+                        <span style="font-size:12px;line-height:1.45;color:var(--muted)">{{ m.desc }}</span>
+                      </span>
+                    </button>
+                  </sc-for>
+                  <div style="display:flex;gap:10px;padding:12px 14px;border-radius:14px;background:var(--surface2)">
+                    <span style="font-family:'Material Symbols Rounded';font-size:18px;color:var(--muted)">info</span>
+                    <span style="font-size:12px;line-height:1.5;color:var(--muted);text-wrap:pretty">{{ formatMetaNote }} SEO fields above stay in the app for copying even when nothing is embedded.</span>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- SIZE TAB -->
+            <sc-if value="{{ isSize }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:6px 16px 28px;display:flex;flex-direction:column;gap:22px">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:16px;font-weight:800">Platform</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ platforms }}" as="p" hint-placeholder-count="7">
+                      <button onClick="{{ p.onClick }}" style="height:40px;padding:0 14px;border-radius:20px;border:{{ p.border }};background:{{ p.bg }};color:{{ p.color }};font-size:13px;font-weight:700;cursor:pointer">{{ p.name }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <sc-if value="{{ isOriginal }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:12px;align-items:center;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+                    <span style="font-family:'Material Symbols Rounded';font-size:24px;color:var(--pink)">photo_size_select_actual</span>
+                    <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:800">Original size · 1200 × 800 px</span><span style="font-size:12px;color:var(--muted)">No resizing. Pick a platform or custom size to change it.</span></span>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isPreset }}" hint-placeholder-val="{{ false }}">
+                  <div data-anchor="orient" style="display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-size:16px;font-weight:800">Orientation</span>
+                      <span style="font-size:12px;color:var(--muted)">{{ platformName }}</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:{{ orientCols }};gap:8px">
+                      <sc-for list="{{ orientCards }}" as="o" hint-placeholder-count="3">
+                        <button onClick="{{ o.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;border-radius:16px;border:{{ o.border }};background:{{ o.bg }};color:var(--ink);cursor:pointer">
+                          <span style="height:48px;display:flex;align-items:center;justify-content:center"><span style="width:{{ o.sw }};height:{{ o.sh }};border-radius:5px;border:2px solid {{ o.shape }};background:{{ o.fill }}"></span></span>
+                          <span style="font-size:12px;font-weight:800;text-align:center;line-height:1.2">{{ o.label }}</span>
+                          <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">{{ o.dims }}</span>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isCustom }}" hint-placeholder-val="{{ false }}">
+                  <div data-anchor="custom" style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:16px;font-weight:800">Custom size</span>
+                      <span style="height:26px;padding:0 10px;border-radius:13px;background:var(--surface2);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:16px">{{ customOrient.icon }}</span>{{ customOrient.label }}</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;gap:8px">
+                      <label style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">Width (px)</span>
+                        <input type="number" value="{{ customW }}" onChange="{{ onCustomW }}" style="height:48px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:16px;font-weight:700;outline:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF"></label>
+                      <button onClick="{{ toggleLock }}" title="Lock aspect ratio" style="width:48px;height:48px;border-radius:12px;border:{{ lockBorder }};background:{{ lockBg }};color:{{ lockColor }};cursor:pointer;font-family:'Material Symbols Rounded';font-size:22px;flex-shrink:0">{{ lockIcon }}</button>
+                      <label style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">Height (px)</span>
+                        <input type="number" value="{{ customH }}" onChange="{{ onCustomH }}" style="height:48px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:16px;font-weight:700;outline:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF"></label>
+                    </div>
+                    <span style="font-size:12px;color:var(--muted)">{{ lockNote }}</span>
+                    <div style="display:flex;gap:8px">
+                      <input value="{{ presetName }}" onChange="{{ onPresetName }}" placeholder="Preset name (optional)" style="flex:1;min-width:0;height:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:14px;outline:none;box-sizing:border-box" style-focus="border-color:#635BFF">
+                      <button onClick="{{ savePreset }}" style="height:44px;padding:0 14px;border:none;border-radius:12px;background:var(--soft);color:var(--pink);font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:18px">bookmark_add</span>{{ saveLabel }}</button>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <span style="font-size:12px;font-weight:700;color:var(--muted);margin-top:4px">Saved presets</span>
+                      <sc-for list="{{ customPresets }}" as="c" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:4px;padding:4px 4px 4px 12px;border-radius:12px;border:{{ c.border }};background:{{ c.bg }}">
+                          <button onClick="{{ c.onApply }}" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:none;background:none;padding:6px 0;cursor:pointer;color:var(--ink);text-align:left"><span style="font-size:14px;font-weight:700">{{ c.name }}</span><span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">{{ c.dims }}</span></button>
+                          <button onClick="{{ c.onEdit }}" style="width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px">edit</button>
+                          <button onClick="{{ c.onDelete }}" style="width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px">delete</button>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isResized }}" hint-placeholder-val="{{ false }}">
+                  <div data-anchor="resize" style="display:flex;flex-direction:column;gap:14px">
+                    <span style="font-size:16px;font-weight:800">Resize &amp; crop</span>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+                        <span style="font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.5px">BEFORE</span>
+                        <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center"><div style="width:140px;height:93px;border-radius:6px;background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div></div>
+                        <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted)">1200 × 800</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;padding:12px;border-radius:16px;background:var(--surface);border:1.5px solid #635BFF">
+                        <span style="font-size:11px;font-weight:800;color:var(--pink);letter-spacing:.5px">AFTER</span>
+                        <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center">
+                          <div style="position:relative;width:{{ pv.fw }};height:{{ pv.fh }};border-radius:6px;overflow:hidden;background:{{ pv.bg }};outline:1px dashed var(--line)">
+                            <div style="position:absolute;left:{{ pv.il }};top:{{ pv.it }};width:{{ pv.iw }};height:{{ pv.ih }};background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+                          </div>
+                        </div>
+                        <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted)">{{ outDims }}</span>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                      <sc-for list="{{ resizeSeg }}" as="r" hint-placeholder-count="2">
+                        <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:800;cursor:pointer">{{ r.label }}</button>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <span style="font-size:12px;font-weight:700;color:var(--muted)">Image position</span>
+                      <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                        <sc-for list="{{ posSeg }}" as="r" hint-placeholder-count="3">
+                          <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                    <sc-if value="{{ isFit }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <span style="font-size:12px;font-weight:700;color:var(--muted)">Background fill</span>
+                        <div style="display:flex;gap:10px">
+                          <sc-for list="{{ fills }}" as="b" hint-placeholder-count="4">
+                            <button onClick="{{ b.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--ink);padding:0">
+                              <span style="width:44px;height:44px;border-radius:12px;background:{{ b.bg }};border:1px solid var(--line);outline:{{ b.ring }};outline-offset:2px"></span>
+                              <span style="font-size:11px;color:var(--muted)">{{ b.label }}</span>
+                            </button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <div style="display:flex;gap:10px;padding:12px 14px;border-radius:14px;background:var(--surface2)">
+                      <span style="font-family:'Material Symbols Rounded';font-size:18px;color:var(--muted)">verified</span>
+                      <span style="font-size:12px;line-height:1.5;color:var(--muted);text-wrap:pretty">Never stretched. Your original stays untouched — MetaPix writes a new file. Presets are recommendations, not upload limits.</span>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <!-- FORMAT TAB -->
+            <sc-if value="{{ isFormat }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:6px 16px 28px;display:flex;flex-direction:column;gap:22px">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:16px;font-weight:800">Output format</span>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    <sc-for list="{{ formats }}" as="x" hint-placeholder-count="3">
+                      <button onClick="{{ x.onClick }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:14px 12px;border-radius:16px;border:{{ x.border }};background:{{ x.bg }};color:var(--ink);cursor:pointer;text-align:left">
+                        <span style="font-size:17px;font-weight:800">{{ x.name }}</span>
+                        <span style="font-size:11px;color:var(--muted);line-height:1.3">{{ x.sub }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                  <sc-if value="{{ isWebp }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                      <sc-for list="{{ webpSeg }}" as="r" hint-placeholder-count="2">
+                        <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:800;cursor:pointer">{{ r.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ showQuality }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:800">Quality</span><span style="font-size:20px;font-weight:800;color:var(--pink)">{{ quality }}%</span></div>
+                      <input type="range" min="10" max="100" value="{{ quality }}" onChange="{{ onQuality }}" style="width:100%;accent-color:#635BFF;height:28px">
+                      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>Smaller file</span><span>Higher fidelity</span></div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ isPng }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <span style="font-size:14px;font-weight:800">Lossless export</span>
+                      <span style="font-size:12px;color:var(--muted);line-height:1.5">PNG never discards detail. Compression only affects file size and save time.</span>
+                      <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                        <sc-for list="{{ pngSeg }}" as="r" hint-placeholder-count="3">
+                          <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ isJpeg }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:800">Progressive encoding</span><span style="font-size:12px;color:var(--muted)">Loads gradually on slow connections</span></span>
+                      <button onClick="{{ progSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ progSwitch.bg }};display:flex;justify-content:{{ progSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:800">Transparent areas</span><span style="font-size:12px;color:var(--muted)">JPEG has no alpha — filled with white</span></span>
+                      <span style="width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid var(--line)"></span>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ hasAlpha }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:800">Preserve transparency</span><span style="font-size:12px;color:var(--muted)">Keep alpha channel in the output</span></span>
+                      <button onClick="{{ alphaSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ alphaSwitch.bg }};display:flex;justify-content:{{ alphaSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:13px;font-weight:700;color:var(--muted)">Final filename</span>
+                  <div style="display:flex;align-items:center;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--field);overflow:hidden">
+                    <input value="{{ fileNameVal }}" onChange="{{ onFileName }}" placeholder="aurora_ai_0412" style="flex:1;min-width:0;height:100%;padding:0 4px 0 14px;border:none;background:transparent;color:var(--ink);font-size:15px;outline:none">
+                    <span style="padding:0 14px;font-size:14px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">{{ ext }}</span>
+                  </div>
+                </div>
+
+                <div data-anchor="location" style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:13px;font-weight:700;color:var(--muted)">Export location</span>
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:16px;background:var(--surface);border:1px solid var(--line)">
+                    <span style="width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--pink);display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:22px">{{ loc.icon }}</span>
+                    <span style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:800">{{ loc.path }}</span><span style="font-size:12px;color:var(--muted)">Remembered · access granted</span></span>
+                    <button onClick="{{ openLocation }}" style="height:40px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer">Change</button>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;border-radius:20px;background:var(--surface);border:1px solid var(--line);padding:6px 16px">
+                  <sc-for list="{{ summary }}" as="s" hint-placeholder-count="6">
+                    <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)">
+                      <span style="font-size:13px;color:var(--muted)">{{ s.k }}</span>
+                      <span style="font-size:13px;font-weight:700;text-align:right;word-break:break-all">{{ s.v }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(20,21,42,.06)">
+            <sc-if value="{{ showSummaryBtn }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ openAdvanced }}" style="flex:1;min-width:0;height:56px;display:flex;align-items:center;gap:8px;padding:0 10px 0 14px;border:none;border-radius:16px;background:var(--surface2);color:var(--ink);cursor:pointer;text-align:left">
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ fmtLabel }} · {{ outDims }}</span>
+                  <span style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ barSub }}</span>
+                </span>
+                <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--muted)">tune</span>
+              </button>
+            </sc-if>
+            <button onClick="{{ doExport }}" style="flex:{{ exportFlex }};height:56px;padding:0 20px;border:none;border-radius:16px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 8px 20px rgba(99,91,255,.35);white-space:nowrap">{{ exportLabel }}<span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_forward</span></button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SUCCESS -->
+      <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;padding:0 8px">
+            <button onClick="{{ goEditor }}" style="width:44px;height:44px;border-radius:22px;border:none;background:transparent;color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px" style-hover="background:var(--surface2)">close</button>
+          </div>
+          <div style="flex:1;overflow:auto;padding:0 20px 24px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;justify-items:center;gap:18px">
+            <span style="width:64px;height:64px;border-radius:32px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:34px;box-shadow:0 10px 24px rgba(99,91,255,.35)">check</span>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
+              <span style="font-size:24px;font-weight:800;letter-spacing:-.3px">Export successful</span>
+              <span style="font-size:13px;color:var(--muted)">Saved to {{ last.loc }}</span>
+            </div>
+            <div style="width:300px;height:220px;display:flex;align-items:center;justify-content:center">
+              <div style="position:relative;width:{{ spv.fw }};height:{{ spv.fh }};border-radius:14px;overflow:hidden;background:{{ spv.bg }};box-shadow:0 12px 30px rgba(20,21,42,.18)">
+                <div style="position:absolute;left:{{ spv.il }};top:{{ spv.it }};width:{{ spv.iw }};height:{{ spv.ih }};background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+              </div>
+            </div>
+            <div style="width:100%;display:flex;flex-direction:column;border-radius:20px;background:var(--surface);border:1px solid var(--line);padding:4px 16px">
+              <sc-for list="{{ lastRows }}" as="s" hint-placeholder-count="5">
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)">
+                  <span style="font-size:13px;color:var(--muted)">{{ s.k }}</span>
+                  <span style="font-size:13px;font-weight:700;text-align:right;word-break:break-all">{{ s.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <sc-for list="{{ successActions }}" as="a" hint-placeholder-count="4">
+                <button onClick="{{ a.onClick }}" style="height:52px;border-radius:14px;border:{{ a.border }};background:{{ a.bg }};color:{{ a.color }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px">{{ a.icon }}</span>{{ a.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PROJECTS -->
+      <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;padding:0 8px 0 16px">
+            <span style="flex:1;font-size:22px;font-weight:800">Projects</span>
+            <button onClick="{{ goImport }}" style="width:44px;height:44px;border-radius:22px;border:none;background:var(--soft);color:var(--pink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:24px">add</button>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;gap:10px">
+            <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+              <div style="display:flex;gap:12px;padding:10px;border-radius:18px;background:var(--surface);border:1px solid var(--line)">
+                <button onClick="{{ p.onEdit }}" style="width:76px;height:76px;flex-shrink:0;border:none;border-radius:12px;background:{{ p.g }};cursor:pointer;padding:0"></button>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+                  <span style="font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span>
+                  <span style="font-size:12px;color:var(--muted)">{{ p.preset }} · {{ p.dims }}</span>
+                  <span style="align-self:flex-start;height:22px;padding:0 8px;border-radius:11px;background:{{ p.sbg }};color:{{ p.scolor }};font-size:11px;font-weight:800;display:flex;align-items:center">{{ p.status }}</span>
+                </div>
+                <div style="display:flex;flex-direction:column;justify-content:center">
+                  <button onClick="{{ p.onEdit }}" title="Edit" style="width:40px;height:36px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px">edit</button>
+                  <button onClick="{{ p.onDup }}" title="Duplicate" style="width:40px;height:36px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px">content_copy</button>
+                </div>
+                <button onClick="{{ p.onDelete }}" title="Delete" style="align-self:center;width:40px;height:40px;border:none;background:none;color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:19px">delete</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- HISTORY -->
+      <sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;padding:0 16px">
+            <span style="flex:1;font-size:22px;font-weight:800">Export history</span>
+            <span style="font-size:12px;color:var(--muted)">{{ historyCount }} files</span>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;gap:10px">
+            <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:18px;background:var(--surface);border:1px solid var(--line)">
+                <div style="display:flex;gap:12px">
+                  <span style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:{{ h.g }}"></span>
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                    <span style="font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.file }}</span>
+                    <span style="font-size:12px;color:var(--muted)">{{ h.meta }}</span>
+                    <span style="font-size:12px;color:var(--muted)">{{ h.when }}</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;border-top:1px solid var(--line);padding-top:8px">
+                  <button onClick="{{ h.onReexport }}" style="flex:1;height:40px;border:none;border-radius:10px;background:var(--surface2);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:18px">replay</span>Re-export</button>
+                  <button onClick="{{ h.onShare }}" style="flex:1;height:40px;border:none;border-radius:10px;background:var(--surface2);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:18px">share</span>Share</button>
+                  <button onClick="{{ h.onDelete }}" title="Delete entry" style="width:44px;height:40px;border:none;border-radius:10px;background:var(--surface2);color:var(--muted);cursor:pointer;font-family:'Material Symbols Rounded';font-size:18px">delete</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SETTINGS -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;align-items:center;padding:0 16px">
+            <span style="font-size:22px;font-weight:800">Settings</span>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 28px;display:grid;align-content:start;grid-template-columns:minmax(0,1fr);grid-auto-rows:max-content;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--muted)">GENERAL</span>
+              <div style="display:flex;flex-direction:column;gap:14px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                <span style="font-size:14px;font-weight:800">Theme</span>
+                <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2);margin-top:-6px">
+                  <sc-for list="{{ themeSeg }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px"><span style="font-size:14px;font-weight:700">Language</span><span style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:2px">English<span style="font-family:'Material Symbols Rounded';font-size:20px">chevron_right</span></span></div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--muted)">METADATA DEFAULTS</span>
+              <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                <sc-for list="{{ defFields }}" as="c" hint-placeholder-count="4">
+                  <label style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;color:var(--muted)">{{ c.label }}</span>
+                    <input value="{{ c.value }}" onChange="{{ c.onChange }}" style="height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:15px;outline:none;box-sizing:border-box;width:100%" style-focus="border-color:#635BFF"></label>
+                </sc-for>
+                <span style="font-size:12px;font-weight:700;color:var(--muted)">Default metadata handling</span>
+                <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2);margin-top:-6px">
+                  <sc-for list="{{ defModeSeg }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--muted)">EXPORT</span>
+              <div style="display:flex;flex-direction:column;gap:14px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                <span style="font-size:14px;font-weight:800">Default format</span>
+                <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2);margin-top:-6px">
+                  <sc-for list="{{ defFmtSeg }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;justify-content:space-between"><span style="font-size:14px;font-weight:800">Default quality</span><span style="font-size:14px;font-weight:800;color:var(--pink)">{{ defQuality }}%</span></div>
+                  <input type="range" min="10" max="100" value="{{ defQuality }}" onChange="{{ onDefQuality }}" style="width:100%;accent-color:#635BFF;height:28px">
+                </div>
+                <button onClick="{{ openLocation }}" style="display:flex;align-items:center;justify-content:space-between;border:none;border-top:1px solid var(--line);background:none;padding:12px 0 0;color:var(--ink);cursor:pointer;text-align:left"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:700">Default export location</span><span style="font-size:12px;color:var(--muted)">{{ loc.path }}</span></span><span style="font-family:'Material Symbols Rounded';font-size:20px;color:var(--muted)">chevron_right</span></button>
+                <div style="display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:12px">
+                  <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:700">Remember last location</span><span style="font-size:12px;color:var(--muted)">Keeps folder access between sessions</span></span>
+                  <button onClick="{{ rememberSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ rememberSwitch.bg }};display:flex;justify-content:{{ rememberSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px">
+                  <span style="font-size:14px;font-weight:700">Filename convention</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ conventions }}" as="p" hint-placeholder-count="3">
+                      <button onClick="{{ p.onClick }}" style="height:36px;padding:0 12px;border-radius:18px;border:{{ p.border }};background:{{ p.bg }};color:{{ p.color }};font-size:12px;font-weight:700;cursor:pointer">{{ p.name }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--muted)">AI</span>
+              <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:700">Metadata language</span><span style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:2px">English<span style="font-family:'Material Symbols Rounded';font-size:20px">chevron_right</span></span></div>
+                <div style="display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:12px">
+                  <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:700">Keyword generation</span><span style="font-size:12px;color:var(--muted)">Suggest focus and related keywords</span></span>
+                  <button onClick="{{ kwSwitch.onToggle }}" style="width:46px;height:28px;border-radius:14px;border:none;padding:3px;background:{{ kwSwitch.bg }};display:flex;justify-content:{{ kwSwitch.justify }};cursor:pointer;flex-shrink:0"><span style="width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></button>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px"><span style="font-size:14px;font-weight:700">Writing style</span><span style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:2px">Descriptive<span style="font-family:'Material Symbols Rounded';font-size:20px">chevron_right</span></span></div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--muted)">STORAGE</span>
+              <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)">
+                <div style="display:flex;justify-content:space-between"><span style="font-size:14px;font-weight:700">Storage used</span><span style="font-size:14px;font-weight:700">{{ storageUsed }}</span></div>
+                <div style="height:8px;border-radius:4px;background:var(--surface2);display:flex;overflow:hidden"><span style="width:38%;background:#635BFF"></span><span style="width:{{ tempPct }};background:#22D3EE"></span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:700">Export history</span><span style="font-size:12px;color:var(--muted)">{{ historyCount }} entries</span></span><button onClick="{{ clearHistory }}" style="height:36px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink);font-size:12px;font-weight:700;cursor:pointer">Clear</button></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:700">Temporary files</span><span style="font-size:12px;color:var(--muted)">{{ tempLabel }}</span></span><button onClick="{{ clearTemp }}" style="height:36px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink);font-size:12px;font-weight:700;cursor:pointer">Clear</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+        <div style="flex-shrink:0;height:72px;display:flex;background:var(--surface);border-top:1px solid var(--line)">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+            <button onClick="{{ n.onClick }}" style="flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:{{ n.color }}">
+              <span style="width:56px;height:30px;border-radius:15px;background:{{ n.bg }};display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:{{ n.fill }}">{{ n.icon }}</span>
+              <span style="font-size:11px;font-weight:700">{{ n.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- SHEETS -->
+      <sc-if value="{{ sheetAdvanced }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end">
+          <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(8,9,20,.45)"></div>
+          <div style="position:relative;background:var(--surface);border-radius:28px 28px 0 0;padding:10px 20px 20px;display:flex;flex-direction:column;gap:16px;max-height:88%;overflow:auto">
+            <span style="align-self:center;width:36px;height:4px;border-radius:2px;background:var(--line)"></span>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:20px;font-weight:800">Export options</span><button onClick="{{ closeSheet }}" style="width:40px;height:40px;border:none;border-radius:20px;background:var(--surface2);color:var(--ink);cursor:pointer;font-family:'Material Symbols Rounded';font-size:20px">close</button></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:700;color:var(--muted)">Format</span>
+              <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                <sc-for list="{{ fmtSeg }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:800;cursor:pointer">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:700;color:var(--muted)">Embedded metadata</span>
+              <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2)">
+                <sc-for list="{{ modeSeg }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="flex:1;height:40px;border:none;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};box-shadow:{{ r.shadow }};font-size:13px;font-weight:700;cursor:pointer">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--field);overflow:hidden">
+              <input value="{{ fileNameVal }}" onChange="{{ onFileName }}" placeholder="aurora_ai_0412" style="flex:1;min-width:0;height:100%;padding:0 4px 0 14px;border:none;background:transparent;color:var(--ink);font-size:15px;outline:none">
+              <span style="padding:0 14px;font-size:14px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">{{ ext }}</span>
+            </div>
+            <button onClick="{{ openLocation }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-align:left">
+              <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--pink)">{{ loc.icon }}</span>
+              <span style="flex:1;font-size:14px;font-weight:700">{{ loc.path }}</span>
+              <span style="font-size:13px;font-weight:700;color:var(--pink)">Change</span>
+            </button>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ summaryShort }}" as="s" hint-placeholder-count="3">
+                <div style="display:flex;justify-content:space-between;padding:7px 0"><span style="font-size:13px;color:var(--muted)">{{ s.k }}</span><span style="font-size:13px;font-weight:700">{{ s.v }}</span></div>
+              </sc-for>
+            </div>
+            <button onClick="{{ doExport }}" style="height:56px;border:none;border-radius:16px;background:linear-gradient(135deg,#635BFF,#8B5CF6);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">{{ exportLabel }}<span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_forward</span></button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sheetLocation }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:21;display:flex;flex-direction:column;justify-content:flex-end">
+          <div onClick="{{ closeLocation }}" style="position:absolute;inset:0;background:rgba(8,9,20,.45)"></div>
+          <div style="position:relative;background:var(--surface);border-radius:28px 28px 0 0;padding:10px 20px 20px;display:flex;flex-direction:column;gap:12px">
+            <span style="align-self:center;width:36px;height:4px;border-radius:2px;background:var(--line)"></span>
+            <span style="font-size:20px;font-weight:800">Save to</span>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <sc-for list="{{ locations }}" as="l" hint-placeholder-count="5">
+                <button onClick="{{ l.onClick }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:{{ l.border }};background:{{ l.bg }};color:var(--ink);cursor:pointer;text-align:left;opacity:{{ l.opacity }}">
+                  <span style="font-family:'Material Symbols Rounded';font-size:22px;color:var(--pink)">{{ l.icon }}</span>
+                  <span style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:800">{{ l.label }}</span><span style="font-size:12px;color:var(--muted)">{{ l.path }}</span></span>
+                  <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#635BFF">{{ l.check }}</span>
+                </button>
+              </sc-for>
+            </div>
+            <span style="font-size:12px;color:var(--muted);line-height:1.5">MetaPix keeps persistent access to the folder you pick, so you won't be asked again. If a folder is moved or deleted, you'll be prompted to choose a new one.</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ fullscreen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;background:#05060C;display:flex;flex-direction:column;justify-content:center">
+          <button onClick="{{ closeFullscreen }}" style="position:absolute;right:12px;top:12px;width:44px;height:44px;border:none;border-radius:22px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;font-family:'Material Symbols Rounded';font-size:22px">close</button>
+          <div style="aspect-ratio:3/2;width:100%;background:radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)"></div>
+          <span style="position:absolute;left:0;right:0;bottom:20px;text-align:center;color:rgba(255,255,255,.75);font-size:12px;font-family:'JetBrains Mono',monospace">aurora_ai_0412.jpg · 1200 × 800 · 1.2 MB</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;right:0;bottom:96px;z-index:40;display:flex;justify-content:center;pointer-events:none">
+          <span style="padding:10px 16px;border-radius:12px;background:#14152A;color:#fff;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.25)">{{ toast }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;exportBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;summary&quot;,&quot;options&quot;:[&quot;summary&quot;,&quot;button-only&quot;],&quot;tsType&quot;:&quot;'summary'|'button-only'&quot;,&quot;section&quot;:&quot;Export bar&quot;},&quot;showEstimate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Export bar&quot;}}">
+const IMG = 'radial-gradient(120% 80% at 72% 18%,rgba(34,211,238,.55),transparent 55%),radial-gradient(90% 70% at 18% 30%,rgba(139,92,246,.75),transparent 60%),linear-gradient(180deg,#1B1C4A 0%,#3A2F7A 46%,#0E3B4A 72%,#081420 100%)';
+const G = [IMG,
+  'linear-gradient(160deg,#FFC59E,#FF7E9D 50%,#7446D6)',
+  'linear-gradient(160deg,#0F3D3E,#2E8B7A 55%,#C9E7A4)',
+  'linear-gradient(160deg,#F4E6D4,#D6A274 50%,#6E4426)',
+  'linear-gradient(160deg,#101828,#2B3A67 50%,#22D3EE)',
+  'linear-gradient(160deg,#FDE2E4,#C3B1E1 50%,#635BFF)',
+  'linear-gradient(160deg,#1E1B16,#7A5C3A 60%,#F2C57C)',
+  'linear-gradient(160deg,#E6F4F1,#8FD3C7 50%,#2A6F97)',
+  'linear-gradient(160deg,#2A0F2E,#8B2F6B 50%,#FF9F7A)'];
+const PRESETS = {
+  facebook: { name: 'Facebook', k: 'F', sizes: { h: [1200, 630], s: [1080, 1080], v: [1080, 1350] } },
+  instagram: { name: 'Instagram', k: 'IG', sizes: { h: [1080, 566], s: [1080, 1080], v: [1080, 1350] } },
+  linkedin: { name: 'LinkedIn', k: 'in', sizes: { h: [1200, 627], s: [1080, 1080], v: [1080, 1350] } },
+  x: { name: 'X (Twitter)', k: 'X', sizes: { h: [1600, 900], s: [1080, 1080], v: [1080, 1350] } },
+  pinterest: { name: 'Pinterest', k: 'P', sizes: { h: [1500, 1000], s: [1000, 1000], v: [1000, 1500], long: [1000, 2100] } },
+};
+const ORIENT = { h: 'Horizontal', s: 'Square', v: 'Vertical', long: 'Long Vertical' };
+const PIN = { h: 'Horizontal Pin', s: 'Square Pin', v: 'Standard Pin', long: 'Long Pin' };
+const FIELDS = [
+  { key: 'fileName', label: 'Image File Name', ph: 'e.g. aurora-mountain-lake' },
+  { key: 'title', label: 'Image Title', ph: 'A clear, descriptive title' },
+  { key: 'alt', label: 'Image Alt Text', ph: 'Describe the image for screen readers', multi: true, max: 125 },
+  { key: 'description', label: 'Image Description', ph: 'A short paragraph about the image', multi: true },
+  { key: 'keyword', label: 'Primary Focus Keyword', ph: 'e.g. aurora borealis landscape' },
+  { key: 'related', label: 'Related Keywords', ph: 'Comma-separated' },
+  { key: 'caption', label: 'Image Caption', ph: 'Optional caption' },
+  { key: 'tags', label: 'Relevant Tags', ph: 'Comma-separated' },
+];
+const SAMPLE = {
+  fileName: ['aurora-over-mountain-lake-night-sky', 'northern-lights-alpine-lake-reflection'],
+  title: ['Aurora Borealis Over a Calm Mountain Lake', 'Northern Lights Reflected in an Alpine Lake'],
+  alt: ['Green and violet aurora glowing above snowy mountains, reflected in a still alpine lake at night', 'Violet and teal northern lights over a dark mountain ridge mirrored on calm water'],
+  description: ['A serene night landscape with vivid northern lights rippling across a starry sky, mirrored on the glassy surface of a remote mountain lake.', 'Bands of teal and violet aurora sweep over a quiet mountain valley, their glow doubled in the still lake below.'],
+  keyword: ['aurora borealis landscape', 'northern lights lake'],
+  related: ['northern lights, night sky, mountain lake, starry sky, nature wallpaper', 'aurora photography, alpine lake, night landscape, reflection'],
+  caption: ["Nature's own light show, reflected in perfect stillness.", 'When the sky dances, the lake joins in.'],
+  tags: ['aurora, northern lights, landscape, night, mountains, lake, AI art', 'aurora, night sky, reflection, alpine, wallpaper, AI image'],
+};
+const FMT = { jpeg: 'JPEG', png: 'PNG', webp: 'WebP' };
+const EXT = { jpeg: '.jpg', png: '.png', webp: '.webp' };
+const LOC = {
+  internal: { label: 'Internal storage', path: 'Internal / MetaPix', icon: 'smartphone' },
+  pictures: { label: 'Pictures', path: 'Pictures / MetaPix', icon: 'photo_library' },
+  downloads: { label: 'Downloads', path: 'Downloads', icon: 'download' },
+  custom: { label: 'Custom folder…', path: 'Documents / Client Work', icon: 'folder_open' },
+  sd: { label: 'SD card', path: 'Not available on this device', icon: 'sd_card', disabled: true },
+};
+const DEF_CR = { creator: 'Mostafij Emon', owner: 'Mostafij Emon', notice: '© Mostafij Emon', credit: 'Mostafij Emon', source: '', terms: '' };
+const emptyFields = () => FIELDS.reduce((a, f) => (a[f.key] = '', a), {});
+const slug = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+class Component extends DCLogic {
+  scrollRef = React.createRef();
+  state = {
+    screen: 'home', tab: 'meta', theme: null, jumpIdx: 0, pending: null,
+    fields: emptyFields(), variant: {}, generating: false, regen: null,
+    crOpen: true, crOn: true, cr: { ...DEF_CR }, defaults: { ...DEF_CR }, metaMode: 'keep', defMode: 'keep',
+    platform: 'original', orient: 'h', customW: 1200, customH: 800, lock: false, ratio: 1.5, presetName: '', editingId: null, activeCustom: null,
+    customPresets: [{ id: 1, name: 'Blog hero', w: 1600, h: 840 }, { id: 2, name: 'Story / Reel', w: 1080, h: 1920 }],
+    resize: 'fill', pos: 'center', bgFill: '#FFFFFF',
+    format: 'jpeg', quality: 90, webpMode: 'lossy', alpha: true, progressive: true, pngLevel: 'balanced',
+    defFormat: 'jpeg', defQuality: 90, location: 'pictures', remember: true, convention: 'seo', kwGen: true, temp: 48,
+    sheet: null, locFromSheet: false, fullscreen: false, toast: null, exporting: false, lastExport: null,
+    projects: [
+      { id: 1, name: 'Aurora over mountain lake', g: G[0], dims: '1000 × 1500', preset: 'Pinterest Vertical', status: 'Metadata Included' },
+      { id: 2, name: 'Sunset café interior', g: G[1], dims: '1080 × 1350', preset: 'Instagram Vertical', status: 'No Metadata Added' },
+      { id: 3, name: 'Forest trail at dawn', g: G[2], dims: '1200 × 630', preset: 'Facebook Horizontal', status: 'Metadata Removed' },
+      { id: 4, name: 'Ceramic still life', g: G[3], dims: '1080 × 1080', preset: 'LinkedIn Square', status: 'Metadata Included' },
+    ],
+    history: [
+      { id: 11, name: 'sunset-cafe-interior-warm-light', ext: '.webp', fmt: 'WebP', w: 1080, h: 1350, size: '286 KB', date: 'Today, 10:42', loc: 'Pictures / MetaPix', g: G[1] },
+      { id: 12, name: 'forest-trail-dawn-mist', ext: '.jpg', fmt: 'JPEG', w: 1200, h: 630, size: '214 KB', date: 'Yesterday, 18:05', loc: 'Downloads', g: G[2] },
+      { id: 13, name: 'ceramic-vase-still-life', ext: '.png', fmt: 'PNG', w: 1080, h: 1080, size: '1.4 MB', date: 'Nov 1, 09:30', loc: 'Documents / Client Work', g: G[3] },
+      { id: 14, name: 'aurora-mountain-lake', ext: '.jpg', fmt: 'JPEG', w: 1600, h: 900, size: '402 KB', date: 'Oct 30, 21:12', loc: 'Pictures / MetaPix', g: G[0] },
+    ],
+  };
+
+  componentWillUnmount() { clearTimeout(this.tt); }
+  toast(msg) { this.setState({ toast: msg }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1600); }
+  copy(text, label) { try { navigator.clipboard && navigator.clipboard.writeText(text); } catch (e) {} this.toast(text ? label + ' copied' : 'Nothing to copy'); }
+
+  out(s = this.state) {
+    if (s.platform === 'original') return [1200, 800];
+    if (s.platform === 'custom') return [Math.max(1, +s.customW || 1), Math.max(1, +s.customH || 1)];
+    const z = PRESETS[s.platform].sizes; return z[s.orient] || z.h;
+  }
+  est(w, h, s = this.state) {
+    const q = s.quality / 100; let bpp;
+    if (s.format === 'png') bpp = 9.5; else if (s.format === 'webp') bpp = s.webpMode === 'lossless' ? 5.2 : 0.45 + 2.6 * q * q * q; else bpp = 0.6 + 3.4 * q * q * q;
+    const b = w * h * bpp / 8; return b >= 1e6 ? (b / 1e6).toFixed(1) + ' MB' : Math.round(b / 1000) + ' KB';
+  }
+  metaStatus(s = this.state) {
+    if (s.metaMode === 'remove') return 'Metadata Removed';
+    const any = Object.values(s.fields).some(v => v && v.trim()) || (s.crOn && Object.values(s.cr).some(v => v && v.trim()));
+    return any ? 'Metadata Included' : 'No Metadata Added';
+  }
+  fileBase(s = this.state) { return slug(s.fields.fileName) || 'aurora_ai_0412'; }
+  record() {
+    const s = this.state; const [w, h] = this.out();
+    return { id: Date.now(), name: this.fileBase(), ext: EXT[s.format], fmt: FMT[s.format], w, h, size: this.est(w, h), date: 'Today, just now', loc: LOC[s.location].path, g: G[0], status: this.metaStatus(), bg: s.resize === 'fit' ? this.fillBg() : '#000', resize: s.resize, pos: s.pos };
+  }
+  fillBg() { const f = this.state.bgFill; return f === 'blur' ? 'linear-gradient(180deg,#3A2F7A,#0E3B4A)' : f; }
+
+  generate = () => {
+    if (this.state.generating) return;
+    this.setState({ generating: true, fields: emptyFields() });
+    setTimeout(() => { const f = {}; FIELDS.forEach(x => f[x.key] = SAMPLE[x.key][0]); this.setState({ fields: f, generating: false, variant: {} }); this.toast('Metadata generated'); }, 1100);
+  };
+  regen(key) {
+    this.setState(s => ({ regen: key, fields: { ...s.fields, [key]: '' } }));
+    setTimeout(() => this.setState(s => { const v = s.variant[key] === 0 ? 1 : 0; return { regen: null, variant: { ...s.variant, [key]: v }, fields: { ...s.fields, [key]: SAMPLE[key][v] } }; }), 700);
+  }
+  doExport = () => {
+    if (this.state.exporting) return;
+    this.setState({ exporting: true, sheet: null });
+    setTimeout(() => { const rec = this.record(); this.setState(s => ({ exporting: false, screen: 'success', lastExport: rec, history: [rec, ...s.history] })); }, 900);
+  };
+  setTab(t) {
+    this.setState({ tab: t });
+    const c = this.scrollRef.current; if (c) { const m = c.querySelector('[data-anchor="tabs"]'); if (m && c.scrollTop > m.offsetTop) c.scrollTop = m.offsetTop; }
+  }
+  scrollTo(a) {
+    const c = this.scrollRef.current; if (!c) return;
+    if (a === 'top') { c.scrollTop = 0; return; }
+    const el = c.querySelector('[data-anchor="' + a + '"]'); if (el) c.scrollTop = el.offsetTop - (a === 'tabs' ? 0 : 72);
+  }
+  openEditor(tab, extra) { this.setState({ screen: 'editor', tab: tab || 'meta', ...(extra || {}) }); }
+  fillSample() { const f = {}; FIELDS.forEach(x => f[x.key] = SAMPLE[x.key][0]); return f; }
+  jump(i) {
+    const s = this.state; const base = { sheet: null, fullscreen: false, jumpIdx: i };
+    const go = (patch, anchor) => this.setState({ ...base, ...patch }, () => { if (anchor) setTimeout(() => this.scrollTo(anchor), 80); });
+    const ed = { screen: 'editor' };
+    const filled = Object.values(s.fields).some(v => v) ? {} : { fields: this.fillSample() };
+    switch (i) {
+      case 0: return go({ screen: 'home' });
+      case 1: return go({ screen: 'import' });
+      case 2: return go({ ...ed, tab: 'meta' }, 'top');
+      case 3: return go({ ...ed, tab: 'meta', ...filled }, 'fields');
+      case 4: return go({ ...ed, tab: 'meta', crOpen: true }, 'copyright');
+      case 5: return go({ ...ed, tab: 'meta' }, 'metamode');
+      case 6: return go({ ...ed, tab: 'size', platform: 'pinterest', orient: 'v' }, 'tabs');
+      case 7: return go({ ...ed, tab: 'size', platform: 'instagram', orient: 's' }, 'orient');
+      case 8: return go({ ...ed, tab: 'size', platform: 'custom' }, 'custom');
+      case 9: return go({ ...ed, tab: 'size', platform: s.platform === 'original' ? 'facebook' : s.platform, resize: 'fit' }, 'resize');
+      case 10: return go({ ...ed, tab: 'format', format: 'webp' }, 'tabs');
+      case 11: return go({ ...ed, tab: 'format', sheet: 'advanced' });
+      case 12: return this.setState({ ...base, screen: 'success', lastExport: s.lastExport || this.record() });
+      case 13: return go({ screen: 'projects' });
+      case 14: return go({ screen: 'history' });
+      case 15: return go({ screen: 'settings' });
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    const theme = s.theme || (this.props.dark ? 'dark' : 'light');
+    const isDark = theme === 'dark';
+    const [w, h] = this.out();
+    const set = (p) => () => this.setState(p);
+    const sw = (on, fn) => ({ bg: on ? '#635BFF' : 'var(--line)', justify: on ? 'flex-end' : 'flex-start', onToggle: fn });
+    const seg = (opts, cur, fn) => opts.map(([v, l]) => ({ label: l, onClick: () => fn(v), bg: cur === v ? 'var(--surface)' : 'transparent', color: cur === v ? 'var(--ink)' : 'var(--muted)', shadow: cur === v ? '0 1px 3px rgba(20,21,42,.14)' : 'none' }));
+    const pick = (on) => ({ border: on ? '1.5px solid #635BFF' : '1px solid var(--line)', bg: on ? 'var(--soft)' : 'var(--surface)' });
+    const chip = (on) => ({ border: on ? '1px solid #635BFF' : '1px solid var(--line)', bg: on ? '#635BFF' : 'var(--surface)', color: on ? '#fff' : 'var(--ink)' });
+    const statusStyle = (st) => st === 'Metadata Included' ? { bg: 'rgba(18,184,134,.14)', color: isDark ? '#4ADE9F' : '#0B7A57', icon: 'check_circle' }
+      : st === 'Metadata Removed' ? { bg: 'rgba(240,82,82,.14)', color: isDark ? '#FF9090' : '#B42323', icon: 'block' }
+      : { bg: 'var(--surface2)', color: 'var(--muted)', icon: 'remove_circle_outline' };
+    const metaStatus = this.metaStatus();
+    const est = this.est(w, h);
+    const qLabel = s.format === 'png' || (s.format === 'webp' && s.webpMode === 'lossless') ? 'Lossless' : s.quality + '%';
+    const preview = (MW, MH, A, mode, pos, bg) => {
+      let fw, fh; if (A >= MW / MH) { fw = MW; fh = MW / A; } else { fh = MH; fw = MH * A; }
+      const IA = 1.5; let iw, ih;
+      if (mode === 'fill') { if (A > IA) { iw = fw; ih = fw / IA; } else { ih = fh; iw = fh * IA; } }
+      else { if (A > IA) { ih = fh; iw = fh * IA; } else { iw = fw; ih = fw / IA; } }
+      const f = pos === 'start' ? 0 : pos === 'end' ? 1 : 0.5;
+      const px = (n) => Math.round(n) + 'px';
+      return { fw: px(fw), fh: px(fh), iw: px(iw), ih: px(ih), il: px((fw - iw) * f), it: px((fh - ih) * f), bg: mode === 'fit' ? bg : '#000' };
+    };
+    const last = s.lastExport || this.record();
+    const sumRows = [['Filename', this.fileBase() + EXT[s.format]], ['Dimensions', `${w} × ${h} px`], ['Format', FMT[s.format]], ['Quality', qLabel], ['Estimated size', '~' + est], ['Metadata', metaStatus], ['Location', LOC[s.location].path]];
+    const custOrient = w > h ? { icon: 'crop_landscape', label: 'Landscape' } : w < h ? { icon: 'crop_portrait', label: 'Portrait' } : { icon: 'crop_square', label: 'Square' };
+    const navItems = [['home', 'Home', 'home'], ['projects', 'Projects', 'folder'], ['history', 'History', 'history'], ['settings', 'Settings', 'settings']]
+      .map(([k, l, ic]) => ({ label: l, icon: ic, onClick: set({ screen: k }), color: s.screen === k ? 'var(--ink)' : 'var(--muted)', bg: s.screen === k ? 'var(--soft)' : 'transparent', fill: s.screen === k ? "'FILL' 1" : "'FILL' 0" }));
+    const jumpLabels = ['Home dashboard', 'Image import', 'Editing workspace', 'Metadata editor', 'Copyright settings', 'Metadata removal', 'Social platform presets', 'Horizontal / Square / Vertical', 'Custom dimensions', 'Resize & crop', 'Format selection', 'Export settings', 'Export success', 'Projects', 'Export history', 'Settings'];
+    const fromImport = (tab, extra) => () => this.setState({ screen: 'import', pending: { tab, extra } });
+    const pd = s.pending || {};
+    const sizeDirty = s.platform !== 'original';
+    const metaDirty = Object.values(s.fields).some(v => v) || s.metaMode !== 'keep';
+    const fmtDirty = s.format !== 'jpeg' || s.quality !== 90;
+
+    return {
+      theme, isDark,
+      jumps: jumpLabels.map((l, i) => ({ n: String(i + 1).padStart(2, '0'), label: l, onClick: () => this.jump(i), bg: s.jumpIdx === i ? '#EEEDFF' : 'transparent', weight: s.jumpIdx === i ? '800' : '600', numColor: s.jumpIdx === i ? '#635BFF' : '#8A8EA6' })),
+      isHome: s.screen === 'home', isImport: s.screen === 'import', isEditor: s.screen === 'editor', isSuccess: s.screen === 'success',
+      isProjects: s.screen === 'projects', isHistory: s.screen === 'history', isSettings: s.screen === 'settings',
+      showNav: ['home', 'projects', 'history', 'settings'].includes(s.screen), navItems,
+      goHome: set({ screen: 'home', sheet: null }), goImport: set({ screen: 'import', pending: null }), goProjects: set({ screen: 'projects' }), goHistory: set({ screen: 'history' }), goEditor: set({ screen: 'editor' }),
+      pickImage: () => this.openEditor(pd.tab, pd.extra),
+      quickActions: [
+        { icon: 'sell', title: 'Add SEO metadata', sub: 'Title, alt text, tags', onClick: fromImport('meta') },
+        { icon: 'aspect_ratio', title: 'Resize for social', sub: 'Platform presets', onClick: fromImport('size', { platform: 'instagram', orient: 'v' }) },
+        { icon: 'swap_horiz', title: 'Convert format', sub: 'JPEG · PNG · WebP', onClick: fromImport('format', { format: 'webp' }) },
+        { icon: 'layers_clear', title: 'Strip metadata', sub: 'Remove EXIF / XMP', onClick: fromImport('meta', { metaMode: 'remove' }) },
+      ],
+      platformShortcuts: [...Object.entries(PRESETS).map(([k, p]) => ({ k: p.k, name: p.name.replace(' (Twitter)', ''), count: Object.keys(p.sizes).length + ' sizes', onClick: fromImport('size', { platform: k, orient: 'h' }) })),
+        { k: '+', name: 'Custom', count: 'Any size', onClick: fromImport('size', { platform: 'custom' }) }],
+      recents: s.projects.slice(0, 4).map(p => ({ ...p, onClick: () => this.openEditor('meta') })),
+      deviceImages: G.map(g => ({ g })),
+      historyCount: s.history.length,
+
+      scrollRef: this.scrollRef,
+      openFullscreen: set({ fullscreen: true }), closeFullscreen: set({ fullscreen: false }), fullscreen: s.fullscreen,
+      saveProject: () => { this.setState(st => ({ projects: [{ id: Date.now(), name: SAMPLE.title[0], g: G[0], dims: `${w} × ${h}`, preset: s.platform === 'original' ? 'Original size' : s.platform === 'custom' ? 'Custom' : PRESETS[s.platform].name + ' ' + ORIENT[s.orient], status: metaStatus }, ...st.projects] })); this.toast('Saved to Projects'); },
+      showOutBadge: sizeDirty, outDims: `${w} × ${h}`,
+      tabs: [['meta', 'Metadata', metaDirty], ['size', 'Size', sizeDirty], ['format', 'Format', fmtDirty]].map(([k, l, d], i) => ({ n: '0' + (i + 1), label: l, dirty: d, onClick: () => this.setTab(k), bg: s.tab === k ? 'var(--surface)' : 'transparent', color: s.tab === k ? 'var(--ink)' : 'var(--muted)', shadow: s.tab === k ? '0 1px 4px rgba(20,21,42,.14)' : 'none' })),
+      isMeta: s.tab === 'meta', isSize: s.tab === 'size', isFormat: s.tab === 'format',
+
+      generate: this.generate, generateLabel: s.generating ? 'Generating…' : 'Generate all with AI',
+      copyAll: () => this.copy(FIELDS.map(f => s.fields[f.key] ? `${f.label}: ${s.fields[f.key]}` : '').filter(Boolean).join('\n'), 'All metadata'),
+      clearAll: () => { this.setState({ fields: emptyFields() }); this.toast('SEO fields cleared'); },
+      fields: FIELDS.map(f => {
+        const v = s.fields[f.key] || ''; const busy = s.generating || s.regen === f.key;
+        return { label: f.label, value: v, ph: busy ? 'Generating…' : f.ph, multi: !!f.multi, single: !f.multi, hasCount: !!f.max, count: `${v.length}/${f.max}`, countColor: v.length > (f.max || 999) ? '#E5484D' : 'var(--muted)',
+          onChange: (e) => { const val = e.target.value; this.setState(st => ({ fields: { ...st.fields, [f.key]: val } })); },
+          onRegen: () => this.regen(f.key), onCopy: () => this.copy(v, f.label), onClear: () => this.setState(st => ({ fields: { ...st.fields, [f.key]: '' } })) };
+      }),
+      crOpen: s.crOpen, toggleCrOpen: set({ crOpen: !s.crOpen }), crChevron: s.crOpen ? 'expand_less' : 'expand_more',
+      crSub: s.crOn ? 'Included in export · editable' : 'Off — not embedded', crOpacity: s.crOn ? 1 : 0.45,
+      crSwitch: sw(s.crOn, set({ crOn: !s.crOn })),
+      crFields: [['creator', 'Creator / Author'], ['owner', 'Copyright Owner'], ['notice', 'Copyright Notice'], ['credit', 'Credit Line'], ['source', 'Source', 'Optional — URL or collection'], ['terms', 'Usage Terms', 'Optional — e.g. CC BY 4.0']]
+        .map(([k, l, ph]) => ({ label: l, value: s.cr[k], ph: ph || 'Optional', onChange: (e) => { const val = e.target.value; this.setState(st => ({ cr: { ...st.cr, [k]: val } })); }, onClear: () => this.setState(st => ({ cr: { ...st.cr, [k]: '' } })) })),
+      resetCr: () => { this.setState(st => ({ cr: { ...st.defaults } })); this.toast('Reset to your defaults'); },
+      saveCrDefault: () => { this.setState(st => ({ defaults: { ...st.cr } })); this.toast('Saved as default'); },
+      status: { ...statusStyle(metaStatus), label: metaStatus },
+      metaModes: [['keep', 'Keep Metadata', 'Preserve existing EXIF / IPTC / XMP and add what you entered.'], ['update', 'Update Metadata', 'Overwrite only the fields you edited; keep everything else.'], ['remove', 'Remove All Metadata', 'Strip EXIF, IPTC, XMP, GPS and camera data for a clean file.']]
+        .map(([k, t, d]) => ({ title: t, desc: d, onClick: set({ metaMode: k }), ...pick(s.metaMode === k), ring: s.metaMode === k ? '#635BFF' : 'var(--line)', dot: s.metaMode === k ? '#635BFF' : 'transparent' })),
+      formatMetaNote: s.format === 'png' ? 'PNG embeds XMP and text chunks only; IPTC fields are mapped to XMP.' : s.format === 'webp' ? 'WebP embeds EXIF and XMP.' : 'JPEG embeds EXIF, IPTC and XMP.',
+
+      platforms: [['original', 'Original'], ...Object.entries(PRESETS).map(([k, p]) => [k, p.name]), ['custom', 'Custom']].map(([k, n]) => ({ name: n, ...chip(s.platform === k), onClick: () => this.setState({ platform: k, orient: PRESETS[k] && !PRESETS[k].sizes[s.orient] ? 'h' : s.orient }) })),
+      isOriginal: s.platform === 'original', isPreset: !!PRESETS[s.platform], isCustom: s.platform === 'custom', isResized: sizeDirty,
+      platformName: PRESETS[s.platform] ? PRESETS[s.platform].name : '',
+      orientCols: PRESETS[s.platform] && PRESETS[s.platform].sizes.long ? 'repeat(4,1fr)' : 'repeat(3,1fr)',
+      orientCards: PRESETS[s.platform] ? Object.entries(PRESETS[s.platform].sizes).map(([k, [cw, ch]]) => {
+        const on = s.orient === k; const m = 40; const sc = m / Math.max(cw, ch);
+        return { label: s.platform === 'pinterest' ? PIN[k] : ORIENT[k], dims: `${cw}×${ch}`, sw: Math.round(cw * sc) + 'px', sh: Math.round(ch * sc) + 'px', shape: on ? '#635BFF' : 'var(--muted)', fill: on ? 'rgba(99,91,255,.18)' : 'transparent', onClick: set({ orient: k }), ...pick(on) };
+      }) : [],
+      customW: s.customW, customH: s.customH, customOrient: custOrient,
+      onCustomW: (e) => { const v = e.target.value; this.setState(st => ({ customW: v, activeCustom: null, customH: st.lock && +v ? Math.round(+v / st.ratio) : st.customH })); },
+      onCustomH: (e) => { const v = e.target.value; this.setState(st => ({ customH: v, activeCustom: null, customW: st.lock && +v ? Math.round(+v * st.ratio) : st.customW })); },
+      toggleLock: () => this.setState(st => ({ lock: !st.lock, ratio: (+st.customW || 1) / (+st.customH || 1) })),
+      lockIcon: s.lock ? 'lock' : 'lock_open', lockBg: s.lock ? 'var(--soft)' : 'var(--surface)', lockColor: s.lock ? 'var(--pink)' : 'var(--muted)', lockBorder: s.lock ? '1.5px solid #635BFF' : '1px solid var(--line)',
+      lockNote: s.lock ? `Aspect ratio locked at ${(+s.customW / +s.customH || 1).toFixed(2)} : 1` : 'Aspect ratio unlocked — width and height change independently',
+      presetName: s.presetName, onPresetName: (e) => this.setState({ presetName: e.target.value }),
+      saveLabel: s.editingId ? 'Update' : 'Save',
+      savePreset: () => {
+        const cw = +s.customW, ch = +s.customH; if (!cw || !ch) return;
+        const name = s.presetName.trim() || `Custom ${cw}×${ch}`;
+        if (s.editingId) this.setState(st => ({ customPresets: st.customPresets.map(p => p.id === st.editingId ? { ...p, name, w: cw, h: ch } : p), editingId: null, presetName: '' }));
+        else { const id = Date.now(); this.setState(st => ({ customPresets: [...st.customPresets, { id, name, w: cw, h: ch }], presetName: '', activeCustom: id })); }
+        this.toast(s.editingId ? 'Preset updated' : 'Preset saved');
+      },
+      customPresets: s.customPresets.map(p => ({ name: p.name, dims: `${p.w} × ${p.h} px`, ...pick(s.activeCustom === p.id),
+        onApply: set({ customW: p.w, customH: p.h, activeCustom: p.id, ratio: p.w / p.h }),
+        onEdit: set({ customW: p.w, customH: p.h, presetName: p.name, editingId: p.id, activeCustom: p.id }),
+        onDelete: () => this.setState(st => ({ customPresets: st.customPresets.filter(x => x.id !== p.id), editingId: st.editingId === p.id ? null : st.editingId })) })),
+      pv: preview(140, 140, w / h, s.resize, s.pos, this.fillBg()),
+      resizeSeg: seg([['fill', 'Crop to fill'], ['fit', 'Fit to canvas']], s.resize, v => this.setState({ resize: v })),
+      posSeg: seg([['start', 'Top · Left'], ['center', 'Center'], ['end', 'Bottom · Right']], s.pos, v => this.setState({ pos: v })),
+      isFit: s.resize === 'fit',
+      fills: [['#FFFFFF', 'White'], ['#11121A', 'Black'], ['#635BFF', 'Brand'], ['blur', 'Blurred']].map(([v, l]) => ({ label: l, bg: v === 'blur' ? 'linear-gradient(180deg,#3A2F7A,#0E3B4A)' : v, ring: s.bgFill === v ? '2px solid #635BFF' : '2px solid transparent', onClick: set({ bgFill: v }) })),
+
+      formats: [['jpeg', 'JPEG', 'Smallest for photos'], ['png', 'PNG', 'Lossless · transparency'], ['webp', 'WebP', 'Modern · compact']].map(([k, n, sub]) => ({ name: n, sub, onClick: set({ format: k }), ...pick(s.format === k) })),
+      isJpeg: s.format === 'jpeg', isPng: s.format === 'png', isWebp: s.format === 'webp', hasAlpha: s.format !== 'jpeg',
+      showQuality: s.format === 'jpeg' || (s.format === 'webp' && s.webpMode === 'lossy'),
+      quality: s.quality, onQuality: (e) => this.setState({ quality: +e.target.value }),
+      webpSeg: seg([['lossy', 'Lossy'], ['lossless', 'Lossless']], s.webpMode, v => this.setState({ webpMode: v })),
+      pngSeg: seg([['fast', 'Fast'], ['balanced', 'Balanced'], ['small', 'Smallest']], s.pngLevel, v => this.setState({ pngLevel: v })),
+      progSwitch: sw(s.progressive, set({ progressive: !s.progressive })),
+      alphaSwitch: sw(s.alpha, set({ alpha: !s.alpha })),
+      fileNameVal: s.fields.fileName, onFileName: (e) => { const val = e.target.value; this.setState(st => ({ fields: { ...st.fields, fileName: val } })); },
+      ext: EXT[s.format], loc: LOC[s.location],
+      openLocation: () => this.setState({ sheet: s.sheet === 'advanced' ? 'location' : 'location', locFromSheet: s.sheet === 'advanced' }),
+      summary: sumRows.map(([k, v]) => ({ k, v })),
+      summaryShort: [['Dimensions', `${w} × ${h} px`], ['Quality', qLabel], ['Estimated size', '~' + est]].map(([k, v]) => ({ k, v })),
+
+      showSummaryBtn: this.props.exportBar !== 'button-only',
+      exportFlex: this.props.exportBar === 'button-only' ? '1' : '0 0 auto',
+      fmtLabel: FMT[s.format],
+      barSub: (this.props.showEstimate === false ? '' : '~' + est + ' · ') + metaStatus,
+      exportLabel: s.exporting ? 'Exporting…' : 'Export Image',
+      doExport: this.doExport,
+      openAdvanced: set({ sheet: 'advanced' }), closeSheet: set({ sheet: null }),
+      sheetAdvanced: s.sheet === 'advanced', sheetLocation: s.sheet === 'location',
+      closeLocation: set({ sheet: s.locFromSheet ? 'advanced' : null }),
+      fmtSeg: seg([['jpeg', 'JPEG'], ['png', 'PNG'], ['webp', 'WebP']], s.format, v => this.setState({ format: v })),
+      modeSeg: seg([['keep', 'Keep'], ['update', 'Update'], ['remove', 'Remove all']], s.metaMode, v => this.setState({ metaMode: v })),
+      locations: Object.entries(LOC).map(([k, l]) => ({ ...l, ...pick(s.location === k), opacity: l.disabled ? 0.45 : 1, check: s.location === k ? 'check_circle' : '',
+        onClick: () => { if (l.disabled) return; this.setState({ location: k, sheet: s.locFromSheet ? 'advanced' : null }); this.toast('Export location saved'); } })),
+
+      last, spv: preview(300, 220, last.w / last.h, last.resize || 'fill', last.pos || 'center', last.bg || '#000'),
+      lastRows: [['Filename', last.name + last.ext], ['Dimensions', `${last.w} × ${last.h} px`], ['Format', last.fmt], ['File size', last.size], ['Metadata', last.status || metaStatus]].map(([k, v]) => ({ k, v })),
+      successActions: [
+        { icon: 'open_in_new', label: 'Open', onClick: () => this.toast('Opening in Gallery…'), border: '1px solid var(--line)', bg: 'var(--surface)', color: 'var(--ink)' },
+        { icon: 'share', label: 'Share', onClick: () => this.toast('Share sheet opened'), border: '1px solid var(--line)', bg: 'var(--surface)', color: 'var(--ink)' },
+        { icon: 'add_photo_alternate', label: 'Export another', onClick: set({ screen: 'editor' }), border: 'none', bg: '#635BFF', color: '#fff' },
+        { icon: 'history', label: 'View history', onClick: set({ screen: 'history' }), border: 'none', bg: 'var(--soft)', color: 'var(--pink)' },
+      ],
+
+      projects: s.projects.map(p => { const st = statusStyle(p.status); return { ...p, sbg: st.bg, scolor: st.color,
+        onEdit: () => this.openEditor('meta'),
+        onDup: () => { this.setState(x => ({ projects: [...x.projects, { ...p, id: Date.now(), name: p.name + ' (copy)' }] })); this.toast('Project duplicated'); },
+        onDelete: () => { this.setState(x => ({ projects: x.projects.filter(q => q.id !== p.id) })); this.toast('Project deleted'); } }; }),
+      history: s.history.map(hh => ({ g: hh.g, file: hh.name + hh.ext, meta: `${hh.fmt} · ${hh.w} × ${hh.h} · ${hh.size}`, when: `${hh.date} · ${hh.loc}`,
+        onReexport: () => this.openEditor('format'), onShare: () => this.toast('Share sheet opened'),
+        onDelete: () => this.setState(x => ({ history: x.history.filter(q => q.id !== hh.id) })) })),
+
+      themeSeg: seg([['light', 'Light'], ['dark', 'Dark'], ['system', 'System']], s.theme || 'system', v => this.setState({ theme: v === 'system' ? null : v })),
+      defFields: [['creator', 'Default creator name'], ['owner', 'Default copyright owner'], ['notice', 'Default copyright notice'], ['credit', 'Default credit line']]
+        .map(([k, l]) => ({ label: l, value: s.defaults[k], onChange: (e) => { const val = e.target.value; this.setState(st => ({ defaults: { ...st.defaults, [k]: val } })); } })),
+      defModeSeg: seg([['keep', 'Keep'], ['update', 'Update'], ['remove', 'Remove']], s.defMode, v => this.setState({ defMode: v })),
+      defFmtSeg: seg([['jpeg', 'JPEG'], ['png', 'PNG'], ['webp', 'WebP']], s.defFormat, v => this.setState({ defFormat: v })),
+      defQuality: s.defQuality, onDefQuality: (e) => this.setState({ defQuality: +e.target.value }),
+      rememberSwitch: sw(s.remember, set({ remember: !s.remember })), kwSwitch: sw(s.kwGen, set({ kwGen: !s.kwGen })),
+      conventions: [['seo', 'SEO title slug'], ['orig', 'Original + suffix'], ['date', 'Date-based']].map(([k, n]) => ({ name: n, ...chip(s.convention === k), onClick: set({ convention: k }) })),
+      storageUsed: s.temp ? '412 MB' : '364 MB', tempPct: s.temp ? '6%' : '0%', tempLabel: s.temp ? s.temp + ' MB of cached previews' : 'Nothing to clear',
+      clearHistory: () => { this.setState({ history: [] }); this.toast('History cleared'); },
+      clearTemp: () => { this.setState({ temp: 0 }); this.toast('Temporary files cleared'); },
+
+      hasToast: !!s.toast, toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

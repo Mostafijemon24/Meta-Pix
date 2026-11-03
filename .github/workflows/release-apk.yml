@@ -1,0 +1,96 @@
+name: Release APK
+
+# Push a tag like v1.0.0 (or run it by hand) to build a signed APK
+# and attach it to a GitHub Release.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag, e.g. v1.0.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install, test and build the web app
+        run: |
+          npm ci
+          npm test
+          npm run build
+          npx cap sync android
+
+      - name: Version from tag
+        id: v
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "VERSION_NAME=${TAG#v}" >> "$GITHUB_ENV"
+          echo "VERSION_CODE=${{ github.run_number }}" >> "$GITHUB_ENV"
+
+      - name: Restore signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            # No release key yet: sign with a temporary debug key so the APK still installs.
+            echo "::warning::Release key secrets not set — APK is signed with a temporary debug key."
+            keytool -genkeypair -keystore "$RUNNER_TEMP/release.jks" -alias debug -keyalg RSA -keysize 2048 \
+              -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
+            {
+              echo "KEYSTORE_FILE=$RUNNER_TEMP/release.jks"
+              echo "KEYSTORE_PASSWORD=android"; echo "KEY_PASSWORD=android"; echo "KEY_ALIAS=debug"
+              echo "SIGNING_NOTE=⚠️ এই APK একটি অস্থায়ী debug key দিয়ে সাইন করা। Release key secrets যুক্ত করার পরের ভার্সনে আপডেট করতে একবার আনইনস্টল করতে হবে।"
+            } >> "$GITHUB_ENV"
+          else
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build signed APK
+        working-directory: app/android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD || env.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS || env.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD || env.KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/MetaPix-${{ steps.v.outputs.tag }}.apk"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.v.outputs.tag }}
+          name: Meta Pix ${{ steps.v.outputs.tag }}
+          files: MetaPix-*.apk
+          body: |
+            ## Meta Pix ${{ steps.v.outputs.tag }}
+
+            **ইনস্টল:** নিচের `MetaPix-${{ steps.v.outputs.tag }}.apk` ফাইলটি ফোনে ডাউনলোড করে খুলুন।
+            প্রথমবার "Install unknown apps" অনুমতি চাইলে দিন। বিস্তারিত গাইড: [README](https://github.com/${{ github.repository }}#readme)
+
+            Android 6.0 (API 23) বা নতুন সংস্করণ লাগবে।
+
+            ${{ env.SIGNING_NOTE }}

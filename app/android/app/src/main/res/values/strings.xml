@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Meta Pix</string>
+    <string name="title_activity_main">Meta Pix</string>
+    <string name="package_name">com.mostafijemon.metapix</string>
+    <string name="custom_url_scheme">com.mostafijemon.metapix</string>
+</resources>

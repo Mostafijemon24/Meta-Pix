@@ -1,0 +1,6 @@
+{
+  "appId": "com.mostafijemon.metapix",
+  "appName": "Meta Pix",
+  "webDir": "dist",
+  "android": { "backgroundColor": "#F8F9FC" }
+}
