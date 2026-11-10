@@ -72,7 +72,38 @@ Meta Pix হলো AI দিয়ে তৈরি বা যেকোনো ছ
 
 > 📱 দরকার: Android 6.0 বা নতুন সংস্করণ। ইন্টারনেট ছাড়াই অ্যাপ চলে।
 
-**ব্রাউজারে ব্যবহার করতে চাইলে:** অ্যাপটি একটি ওয়েব অ্যাপ (PWA) হিসেবেও চলে। সাইটটি Chrome এ খুলে মেনু থেকে **Install app / Add to Home screen** চাপুন।
+**ব্রাউজারে / ওয়েবসাইটে ব্যবহার করতে চাইলে:** Vercel-এ হোস্ট করা **Meta Pix** ওয়েবসাইট খুলুন (`web/` — বিস্তারিত নিচে)। অথবা লোকাল Vite অ্যাপ (`app/`) Chrome এ চালিয়ে **Install app / Add to Home screen** চাপুন।
+
+---
+
+## ওয়েবসাইট (Vercel + OpenRouter)
+
+`web/` ফোল্ডারে SEO-বান্ধব **Next.js** সাইট আছে — একই নামে **Meta Pix**।
+
+| | |
+|---|---|
+| ল্যান্ডিং | `/` — sitemap, robots, Open Graph, JSON-LD |
+| স্টুডিও | `/studio` — মেটাডাটা, রিসাইজ, এক্সপোর্ট |
+| AI | `/api/ai/optimize` — OpenRouter **ফ্রি** vision মডেল ছবি দেখে SEO ফিল্ড + সাইজ/ফরম্যাট অটো পূরণ করে |
+
+```bash
+cd web
+cp .env.example .env.local   # OPENROUTER_API_KEY দিন
+npm install
+npm run dev                  # http://localhost:3000
+```
+
+**Vercel এ ডিপ্লয় (প্রজেক্ট নাম: `meta-pix`):**
+
+1. [vercel.com](https://vercel.com) এ GitHub রিপো ইমপোর্ট করুন
+2. **Root Directory** = `web`
+3. Project name = `meta-pix` → `https://meta-pix.vercel.app`
+4. Environment variables:
+   - `OPENROUTER_API_KEY` — [openrouter.ai/keys](https://openrouter.ai/keys)
+   - `NEXT_PUBLIC_SITE_URL=https://meta-pix.vercel.app`
+   - (ঐচ্ছিক) `OPENROUTER_MODEL=openrouter/free`
+
+বিস্তারিত: [`web/README.md`](web/README.md)
 
 ---
 
@@ -232,7 +263,7 @@ Meta Pix হলো AI দিয়ে তৈরি বা যেকোনো ছ
 ## সাধারণ প্রশ্ন ও সমস্যার সমাধান
 
 **ছবি কি কোথাও আপলোড হয়?**
-না। সব কাজ ফোনের ভেতরেই হয়। কোনো ছবি বা তথ্য কোনো সার্ভারে যায় না।
+Android অ্যাপ / লোকাল Vite বিল্ডে সব কাজ ডিভাইসেই হয়। **ওয়েবসাইটের Auto Optimize** চালু থাকলে SEO জেনারেটের জন্য ছবির একটি ছোট প্রিভিউ OpenRouter API তে যায় (আপনার API কী দিয়ে); এক্সপোর্ট ফাইল সার্ভারে সেভ হয় না।
 
 **Export এর আগে দেখানো সাইজ আর আসল সাইজ আলাদা কেন?**
 Export বারের সাইজ একটি আনুমানিক হিসাব। আসল সাইজ এক্সপোর্টের পর দেখায়।
@@ -246,21 +277,26 @@ Export বারে লেখা থাকে: *Metadata included*, *Metadata re
 **Gallery তে এক্সপোর্ট করা ছবি দেখছি না।**
 **Files** অ্যাপ খুলে **Documents › MetaPix** ফোল্ডারে দেখুন। অথবা Export এর পর **Share** চেপে Gallery / Photos এ সেভ করুন।
 
-**"Fill with AI" কি সত্যিকারের AI?**
-এখনো না — বর্তমান সংস্করণ ফাইলের নাম থেকে প্রস্তাব তৈরি করে। তাই ছবির ফাইলের নাম বর্ণনামূলক রাখলে (যেমন `sunset-beach-cox-bazar.jpg`) ভালো ফলাফল পাবেন।
+**"Fill with AI" / Auto Optimize কি সত্যিকারের AI?**
+ওয়েবসাইট (`web/`) এ হ্যাঁ — OpenRouter ফ্রি vision মডেল ছবি দেখে মেটাডাটা, প্ল্যাটফর্ম সাইজ ও ফরম্যাট সাজেস্ট করে। Android/Vite অ্যাপে এখনো ফাইলের নাম থেকে সাজেশন হয়; বর্ণনামূলক নাম (যেমন `sunset-beach-cox-bazar.jpg`) ভালো ফল দেয়।
 
 ---
 
 ## ডেভেলপারদের জন্য
 
-অ্যাপটি **React + TypeScript + Vite** দিয়ে তৈরি, Android APK তৈরি হয় **Capacitor** দিয়ে।
+- **ওয়েবসাইট:** Next.js → [`web/`](web/) (Vercel)
+- **মোবাইল/PWA:** React + Vite + Capacitor → [`app/`](app/)
 
 ```bash
+# Website
+cd web && npm install && npm run dev
+
+# Mobile / PWA
 cd app
 npm install
-npm run dev        # ব্রাউজারে চালান: http://localhost:5173
-npm test           # unit tests
-npm run build      # production build (dist/)
+npm run dev        # http://localhost:5173
+npm test
+npm run build
 ```
 
 **নতুন APK রিলিজ:** একটি ভার্সন ট্যাগ পুশ করুন —

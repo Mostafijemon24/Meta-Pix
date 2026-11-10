@@ -1,0 +1,14 @@
+{
+  "name": "Meta Pix",
+  "short_name": "Meta Pix",
+  "description": "Prepare, optimize, and export images for every social platform.",
+  "start_url": "/studio",
+  "display": "standalone",
+  "background_color": "#F8F9FC",
+  "theme_color": "#635BFF",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
