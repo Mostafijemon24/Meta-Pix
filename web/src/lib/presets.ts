@@ -40,7 +40,14 @@ export const emptyFields = (): Fields =>
   [...CORE_FIELDS, ...EXTRA_FIELDS].reduce((a, [k]) => ((a[k] = ''), a), {} as Fields);
 
 export const slug = (t: string) =>
-  (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  (t || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .replace(/-{2,}/g, '-')
+    .slice(0, 80);
 
 /** Output dimensions for the current size selection. */
 export function outputSize(
