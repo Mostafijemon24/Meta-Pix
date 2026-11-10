@@ -9,7 +9,7 @@ const SYSTEM = `You are Meta Pix, an SEO image optimization expert.
 Analyze the image and return ONLY valid JSON (no markdown) with this exact shape:
 {
   "fields": {
-    "fileName": "new-descriptive-kebab-slug",
+    "fileName": "kebab-case-seo-slug",
     "title": "SEO title under 70 chars",
     "alt": "Accessible alt text describing the image",
     "description": "1-2 sentence SEO description",
@@ -27,9 +27,8 @@ Analyze the image and return ONLY valid JSON (no markdown) with this exact shape
 }
 Rules:
 - Write metadata in the same language as any text in the image; otherwise English.
-- fields.fileName MUST be a NEW SEO kebab-case slug from what you SEE in the image.
-- NEVER reuse or lightly edit the original upload filename (ignore IMG_, DSC_, WhatsApp, UUIDs, timestamps).
-- fileName: lowercase English words, hyphens only, no extension.
+- Base every field on what is actually visible in the image — be specific and accurate.
+- fileName must be lowercase kebab-case, no extension, derived from the image subject (not camera codes).
 - Pick platform + orient that best match the image aspect ratio and likely social use.
 - Prefer webp for web/social unless transparency clearly matters (then png).
 - Prefer fill for photo crops; fit when the full subject must stay visible.
@@ -73,9 +72,9 @@ export async function POST(req: NextRequest) {
 
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://meta-pix-mauve.vercel.app';
   const userText = [
-    `Ignore original filename for SEO naming. Upload label (do not reuse): ${fileName}`,
+    `Original file name (for context only): ${fileName}`,
     width && height ? `Pixel size: ${width}×${height}` : null,
-    'Invent a brand-new descriptive kebab-case fileName from what you see, plus full SEO fields.',
+    'Generate complete, accurate SEO metadata and social export recommendations for Meta Pix from the image content.',
   ]
     .filter(Boolean)
     .join('\n');

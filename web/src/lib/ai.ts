@@ -28,18 +28,26 @@ export async function imageToDataUrl(blob: Blob, maxEdge = 1024, quality = 0.82)
   return c.toDataURL('image/jpeg', quality);
 }
 
-/** Always produce a new SEO slug — never keep the raw upload name. */
-function seoFileName(raw: string | undefined, title: string, fallbackName: string): string {
-  const fromAi = slug(raw || '');
-  if (fromAi && fromAi.length >= 3 && !/^(img|image|photo|pic|untitled|dsc|pxl|screenshot|whatsapp|copy)/.test(fromAi)) {
-    return fromAi.slice(0, 80);
-  }
+const JUNK = /^(img|image|photo|pic|untitled|dsc|pxl|screenshot|whatsapp|copy|final|edit|export|download|file|temp|tmp)([-_]|$)/i;
+
+function looksLikeUploadName(candidate: string, originalName: string) {
+  const a = slug(candidate);
+  const b = slug(originalName.replace(/\.[^.]+$/, ''));
+  if (!a) return true;
+  if (JUNK.test(a)) return true;
+  if (b && (a === b || a.includes(b) || b.includes(a))) return true;
+  // Mostly digits / uuid-like
+  if (/^[0-9-]{6,}$/.test(a)) return true;
+  if (/[0-9a-f]{8}-[0-9a-f]{4}/i.test(candidate)) return true;
+  return false;
+}
+
+/** Prefer AI slug; if it matches the upload/junk name, rebuild from the SEO title. */
+function ensureSeoFileName(aiName: string | undefined, title: string, originalName: string): string {
+  const fromAi = slug(aiName || '');
+  if (fromAi && !looksLikeUploadName(fromAi, originalName)) return fromAi.slice(0, 80);
   const fromTitle = slug(title);
   if (fromTitle && fromTitle.length >= 3) return fromTitle.slice(0, 80);
-  const fromFile = slug(fallbackName.replace(/\.[^.]+$/, ''));
-  if (fromFile && fromFile.length >= 3 && !/^(img|image|photo|pic|untitled|dsc|pxl|screenshot|whatsapp|copy)/.test(fromFile)) {
-    return fromFile.slice(0, 80);
-  }
   return 'seo-optimized-image';
 }
 
@@ -47,11 +55,11 @@ function normalizeFields(raw: Partial<Fields> | undefined, fileName: string): Fi
   const base = suggestMetadata(fileName);
   const out = emptyFields();
   for (const k of Object.keys(out) as (keyof Fields)[]) {
-    if (k === 'fileName') continue;
     const v = raw?.[k];
     out[k] = typeof v === 'string' && v.trim() ? v.trim() : base[k];
   }
-  out.fileName = seoFileName(raw?.fileName, out.title, fileName);
+  // Keep all SEO fields from the model; only rewrite fileName when needed.
+  out.fileName = ensureSeoFileName(raw?.fileName ?? out.fileName, out.title, fileName);
   return out;
 }
 
@@ -75,7 +83,6 @@ export async function requestAiOptimize(opts: {
       fileName: opts.fileName,
       width: opts.width,
       height: opts.height,
-      forceNewFileName: true,
     }),
   });
 
