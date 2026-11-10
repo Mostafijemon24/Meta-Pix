@@ -119,8 +119,7 @@ const freshEdit = (s: Settings, src?: { w: number; h: number }): Edit => ({
 
 export type LastExport = HistoryRecord & { url: string };
 
-const baseName = (n: string) => n.replace(/\.[^.]+$/, '');
-const safeName = (n: string) => n.replace(/[\\/:*?"<>|]+/g, '-').trim() || 'image';
+const safeName = (n: string) => n.replace(/[\\/:*?"<>|]+/g, '-').trim() || 'seo-optimized-image';
 
 export function useMetaPix() {
   const [settings, setSettings] = useState<Settings>(() => {
@@ -199,7 +198,9 @@ export function useMetaPix() {
         toast('AI optimized your image');
         return result;
       } catch (e) {
-        setEdit({ fields: suggestMetadata(img.name), more: true });
+        const fields = suggestMetadata(img.name);
+        fields.fileName = slug(fields.title) || slug(fields.fileName) || 'seo-optimized-image';
+        setEdit({ fields, more: true });
         toast(e instanceof Error ? e.message : 'AI unavailable — used filename suggestions');
         return null;
       } finally {
@@ -253,7 +254,13 @@ export function useMetaPix() {
   const metaStatus =
     edit.metaMode === 'remove' ? 'Metadata removed' : hasPayload(payload) ? 'Metadata included' : 'No metadata';
   const estimate = formatBytes(estimateBytes(out[0], out[1], edit.format, edit.quality));
-  const outName = safeName(slug(edit.fields.fileName) || (src ? baseName(src.name) : 'image')) + EXT[edit.format];
+  // Prefer AI/SEO slug; never keep a raw camera/upload name as the export basename.
+  const outName =
+    safeName(
+      slug(edit.fields.fileName) ||
+        slug(edit.fields.title) ||
+        'seo-optimized-image',
+    ) + EXT[edit.format];
   const locLabel = isNative ? NATIVE_FOLDER : settings.location === 'folder' && folder ? folder.name : 'Downloads';
 
   const setTab = useCallback(

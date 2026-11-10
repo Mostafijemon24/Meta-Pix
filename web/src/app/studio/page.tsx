@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import MetaPixApp from '../../studio/MetaPixApp';
 
 export const metadata: Metadata = {
-  title: 'Studio — Bulk SEO Image Optimizer',
+  title: 'Studio',
   description:
-    'Bulk-upload images, auto-generate SEO filenames, alt text, titles and keywords with OpenRouter, then export WebP/JPEG/PNG or ZIP.',
+    'Open Meta Pix Studio — AI SEO metadata, social resize, and JPEG / PNG / WebP export in the browser.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/studio' },
 };
