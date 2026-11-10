@@ -97,10 +97,11 @@ npm run dev                  # http://localhost:3000
 
 1. [vercel.com](https://vercel.com) এ GitHub রিপো ইমপোর্ট করুন
 2. **Root Directory** = `web`
-3. Project name = `meta-pix` → `https://meta-pix.vercel.app`
+3. Project name = `meta-pix` → live: [meta-pix-mauve.vercel.app](https://meta-pix-mauve.vercel.app)  
+   (`meta-pix.vercel.app` already taken globally on Vercel.)
 4. Environment variables:
    - `OPENROUTER_API_KEY` — [openrouter.ai/keys](https://openrouter.ai/keys)
-   - `NEXT_PUBLIC_SITE_URL=https://meta-pix.vercel.app`
+   - `NEXT_PUBLIC_SITE_URL=https://meta-pix-mauve.vercel.app`
    - (ঐচ্ছিক) `OPENROUTER_MODEL=openrouter/free`
 
 বিস্তারিত: [`web/README.md`](web/README.md)

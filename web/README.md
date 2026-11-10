@@ -22,10 +22,11 @@ Open [http://localhost:3000](http://localhost:3000) and Studio at `/studio`.
 
 1. Import the GitHub repo on [vercel.com](https://vercel.com).
 2. Set **Root Directory** to `web`.
-3. Project name: `meta-pix` → `https://meta-pix.vercel.app`.
+3. Project name: `meta-pix` → live URL `https://meta-pix-mauve.vercel.app`  
+   (`meta-pix.vercel.app` is already taken on Vercel’s global namespace.)
 4. Environment variables:
    - `OPENROUTER_API_KEY`
-   - `NEXT_PUBLIC_SITE_URL=https://meta-pix.vercel.app`
+   - `NEXT_PUBLIC_SITE_URL=https://meta-pix-mauve.vercel.app`
    - optional `OPENROUTER_MODEL=openrouter/free`
 5. Deploy.
 
